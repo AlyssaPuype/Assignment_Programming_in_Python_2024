@@ -30,7 +30,7 @@ class Database:
 			        date TEXT NOT NULL,
 			        subject TEXT NOT NULL,
 			        status TEXT CHECK(status IN ('to do', 'in progress', 'done')),
-			        hours_focused INTEGER NOT NULL,
+			        hours INTEGER NOT NULL,
 			        FOREIGN KEY (course_id) REFERENCES Courses(id)
 			    );
 			""")
