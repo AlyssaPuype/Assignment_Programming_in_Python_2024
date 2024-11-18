@@ -1,6 +1,7 @@
 import sqlite3
 
 from models.course import Course
+from models.session import Session
 
 # Manage the database for the study tracker application
 
