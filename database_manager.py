@@ -23,6 +23,7 @@ class DatabaseManager:
 				CREATE TABLE IF NOT EXISTS Courses (
 			    	id INTEGER PRIMARY KEY AUTOINCREMENT,
 			    	name TEXT UNIQUE NOT NULL
+			    	# amount_sessions, possible to add another column, counting how many sessions each course has, by default, upon making a course, it is set to 0
 			    );
 			""")
 
@@ -46,7 +47,7 @@ class DatabaseManager:
 
 	#queries:
 
-	def add_course(self, name):
+	def create_course(self, name):
 		try:
 			self.cursor.execute("INSERT INTO Courses (name) VALUES (?)", (name,))
 			return Course(self.cursor.lastrowid, name)
@@ -54,6 +55,9 @@ class DatabaseManager:
 			print(f"Error when adding {name} to Courses: {e}")
 			self.con.rollback()
 	
+	def read_course(self, course_id):
+		try:
+			self.cursor.execute("SELECT id, name FROM Courses WHERE id=?", (course_id,))
 	
 
 	def close(self):

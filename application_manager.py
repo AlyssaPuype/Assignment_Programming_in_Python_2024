@@ -7,7 +7,9 @@ class StudyTracker:
     def __init__(self, db: DatabaseManager):
         self.db = db
 
-    # application-related methods:
+# application-related methods:
+
+	# shows a list of commands
     def show_commands(self):
         print("List of commands:")
         print("""
@@ -24,17 +26,19 @@ class StudyTracker:
             - 'update session [column, new content]'
         """)
 
-    # course related methods:
+# course related methods:
     def add_course(self, arg_list):
         name = arg_list[0]
-        added_course = self.db.add_course(name)
+        added_course = self.db.create_course(name)
         
         if added_course is None:
             return
 
         print(f"{added_course} added")
 
-    # session related methods:
+    
+
+# session related methods:
     """
     def removeCourse():
 

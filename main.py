@@ -8,12 +8,15 @@ tracker = StudyTracker(database)
 
 
 print("Welcome to study tracker!")
-print("To see the list of commands, type '/help'")
+print("To see the list of commands, type 'help'")
 
 while True:
 	command = input("Enter your command: ")
 
-	if command == "/help":
+	if command == "exit":
+		break
+
+	if command == "help":
 	    tracker.show_commands()
 
 	else:
