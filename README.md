@@ -45,4 +45,12 @@ You can also add and remove and view sessions and courses.
 	[ ]	viewing session with status as parameter shows all sessions with that status
 	[ ]	viewing session with no parameters shows all sessions
 
-important to fix: [ ] removing a course gives an error but closes the application -> make sure u stay in the application
+## important to fix: 
+[ ] removing a course gives an error but closes the application -> make sure u stay in the application
+[ ] 
+		Enter your command: add course Programming in Python
+		ID: 7 Course Programming added
+		Enter your command: view course
+		4 | Biologie
+		7 | Programming
+	

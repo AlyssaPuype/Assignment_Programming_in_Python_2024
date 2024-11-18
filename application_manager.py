@@ -1,4 +1,4 @@
-""" interaction with database to add, remove, edit, fetch data from the database"""
+""" interaction with database manager to add, remove, edit, fetch data from the database"""
 
 from database_manager import DatabaseManager
 
@@ -29,7 +29,7 @@ class StudyTracker:
 	"""course related methods:"""
 
 	def add_course(self, arg_list: list[str]) -> None:
-		course_name = arg_list[0]
+		course_name = " ".join(arg_list[0:])
 		added_course = self.db.create_course(course_name)
 		
 		if added_course is None:
