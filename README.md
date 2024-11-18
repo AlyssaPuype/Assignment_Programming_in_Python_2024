@@ -31,7 +31,7 @@ You can also add and remove and view sessions and courses.
 [ ] add the remaining queries in database_manager.py
 	[x] add read_course query in database_manager.py
 	[x] add view_course query
-	[x] add remove_course
+	[x] add remove_course query 
 [ ] add the remaining methods in application_manager.py
 [ ] add a third column in the table Courses in database_manager that displays the amount of linked sessions to each course
 [ ] add try-excepts where needed
