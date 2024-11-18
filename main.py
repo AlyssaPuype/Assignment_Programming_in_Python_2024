@@ -22,10 +22,10 @@ while True:
 	else:
 		command_args = command.split()
 		action_name = command_args[0]
-		course_name = command_args[1]
+		model_name = command_args[1]
 		command_args = command_args[2:]
 
-		if course_name == "course":
+		if model_name == "course":
 		    match action_name:
 		        case "add":
 		            tracker.add_course(command_args)
@@ -35,7 +35,7 @@ while True:
 		            tracker.view_course(command_args)
 		        case "update":
 		            tracker.update_course(command_args)
-		elif course_name == "session":
+		elif model_name == "session":
 		    match action_name:
 		        case "add":
 		            tracker.addSession(command_args)
