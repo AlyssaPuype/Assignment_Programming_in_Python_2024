@@ -85,6 +85,23 @@ class DatabaseManager:
 			print(f"Error when reading all courses: {e}")
 			self.con.rollback()
 
+	def update_course(self, course_id):
+		pass
+
+	def delete_course(self, course_id):
+		try:
+			self.cursor.execute("DELETE FROM Courses WHERE id=?", (course_id,))
+			self.con.commit()
+
+			#row count return the amount of affected rows in last query, so we check if it was indeed removed, if not, means it did not exists:
+			if self.cursor.rowcount > 0 :
+				print(f"Course with ID {course_id} has been succesfully removed")
+			else:
+				print(f"No courses found to remove with ID: {course_id}")
+
+		except sqlite3.Error as e:
+			print(f"Error when deleting course with ID: {course_id}: {e}")
+			self.con.rollback
 
 	# close the connection
 	def close(self):

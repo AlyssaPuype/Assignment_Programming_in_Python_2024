@@ -16,9 +16,9 @@ class StudyTracker:
 		Courses:
 			- 'add course [course_name]'
 			- 'remove course [course_id]'
-			- 'view course [course_id]'
+			- 'view course [course_id]. When no course ID given, it will show all courses'
 			- 'update course [course_id]'
-		-------------------------------------------------------------
+		-------------------------------------------------------------------------------------
 		Sessions:
 			- 'add session [course_id, date, subject, status, hours]'        
 			- 'remove session [session_id]'
@@ -37,18 +37,31 @@ class StudyTracker:
 		print(f"{added_course} added")
 
 	def view_course(self, arg_list):
-		
+
+		# if no parameter is given, show all current courses
 		if not arg_list:
 			self.db.read_all_courses()
 			return
 
-		course_id = arg_list [0]
+		# if course_id is given as parameter, show the course info
+		course_id = arg_list[0]
 		viewed_coursed = self.db.read_course(course_id)
-
 		if viewed_coursed is None:
 			return
 
-		print(f"{viewed_coursed.id} | {viewed_coursed.name} is shown")
+		print(f"{viewed_coursed.id} | {viewed_coursed.name}")
+
+	def edit_course():
+		pass
+
+	def remove_course(self, arg_list):
+		course_id = arg_list[0]
+		removed_course = self.db.delete_course(course_id)
+		if removed_course is None:
+			return
+
+		print(f"{removed_course} is removed from table")
+
 
 # session related methods:
 	"""
