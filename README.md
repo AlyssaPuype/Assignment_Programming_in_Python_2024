@@ -29,14 +29,16 @@ You can also add and remove and view sessions and courses.
 [x] add help command for the user to see a list of available commands
 
 [ ] add the remaining queries in database_manager.py
+	[x] add read_course query in database_manager.py
 [ ] add the remaining methods in application_manager.py
 [ ] add a third column in the table Courses in database_manager that displays the amount of linked sessions to each course
 [ ] add try-excepts where needed
 [ ] adapt session.py: add the __str__ function
+
 [ ] viewing a course with id as parameter shows : id, name (, amount of sessions)
-		viewing course with no parameters shows all courses
+	[ ]viewing course with no parameters shows all courses
 [ ] viewing a session with id as parameter shows: id, course id (name?), date (check format), subject, status, hours 
-		viewing session with course_id as parameter shows all sessions for that course
-		viewing session with date as parameter shows all sessions for that date
-		viewing session with status as parameter shows all sessions with that status
-		viewing session with no parameters shows all sessions
+	[ ]	viewing session with course_id as parameter shows all sessions for that course
+	[ ]	viewing session with date as parameter shows all sessions for that date
+	[ ]	viewing session with status as parameter shows all sessions with that status
+	[ ]	viewing session with no parameters shows all sessions

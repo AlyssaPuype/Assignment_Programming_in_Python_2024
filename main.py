@@ -32,9 +32,9 @@ while True:
 		        case "remove":
 		            tracker.remove_course(command_args)
 		        case "view":
-		            tracker.getCourse(command_args)
+		            tracker.view_course(command_args)
 		        case "update":
-		            tracker.updateCourse(command_args)
+		            tracker.update_course(command_args)
 		elif course_name == "session":
 		    match action_name:
 		        case "add":

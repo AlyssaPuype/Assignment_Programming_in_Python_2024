@@ -7,5 +7,5 @@ class Course:
 		self.name = name
 
 	def __str__(self):
-		return f"course {self.name}"
+		return f"ID: {self.id} Course {self.name}"
 
