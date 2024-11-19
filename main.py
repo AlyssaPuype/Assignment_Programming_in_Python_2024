@@ -21,6 +21,10 @@ while True:
 
 	else:
 		command_args = command.split()
+		if len(command_args) < 2:
+			print("Unknown command. Type 'help' to see the list of commands")
+			continue
+		
 		action_name = command_args[0]
 		model_name = command_args[1]
 		command_args = command_args[2:]
@@ -35,6 +39,8 @@ while True:
 		            tracker.view_course(command_args)
 		        case "update":
 		            tracker.update_course(command_args)
+		        case _:
+		        	print("Unknown command. Type 'help' to see the list of commands")
 		elif model_name == "session":
 		    match action_name:
 		        case "add":
@@ -45,5 +51,8 @@ while True:
 		            tracker.getSession(command_args)
 		        case "update":
 		            tracker.updateSession(command_args)
+		        case _:
+		        	print("Unknown command. Type 'help' to see the list of commands")
 		else:
-			print("Unknown command. Type /help to see the list of commands")
+			print("Unknown command. Type 'help' to see the list of commands")
+

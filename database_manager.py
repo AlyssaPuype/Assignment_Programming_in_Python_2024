@@ -61,16 +61,10 @@ class DatabaseManager:
 
 	"""READ"""
 	"""gets info about the course when given a course_id as parameter"""
-	def read_course(self, course_id: int) -> Course:
-		try:
-			query = "SELECT id, name FROM Courses WHERE id=?"
-			df = pd.read_sql_query(query, self.con, params=(course_id,))
-			if df.empty:
-				print(f"No course found with ID: {course_id}")
-			else:
-				print(df)
-		except Exception as e:
-			print(f"Error when reading {course_id}: {e}")
+	def read_course(self, course_id: int) -> pd.DataFrame:
+		query = "SELECT id, name FROM Courses WHERE id=?"
+		df = pd.read_sql_query(query, self.con, params=(course_id,))
+		return df
 			
 	"""
 	if no parameters are given, the command should display a list of all added courses.
@@ -90,17 +84,11 @@ class DatabaseManager:
 
 	"""UPDATE"""
 	"""updates the name of a course"""
-	def update_course(self, course_id: int, course_new_name: str):
-		try:
-			self.cursor.execute("UPDATE Courses SET name=? WHERE id=?", (course_new_name, course_id))
-			self.con.commit()
-			if self.cursor.rowcount > 0:
-				print(f"Course with id {course_id} has been succesfully updated to new name: {course_new_name}")
-			else:
-				print(f"No courses found to update wih id: {course_id}")
-			return course_new_name
-		except Exception as e:
-			print(f"Error when updating course {course_id} to new name: {course_new_name}")
+	def update_course(self, course_id: int, course_new_name: str) -> Course:
+		self.cursor.execute("UPDATE Courses SET name=? WHERE id=?", (course_new_name, course_id))
+		self.con.commit()
+		if self.cursor.rowcount > 0:
+			return self.read_course(course_id)
 
 	"""DELETE"""
 	def delete_course(self, course_id: int) -> None:

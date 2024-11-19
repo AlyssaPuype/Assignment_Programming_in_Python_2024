@@ -62,11 +62,13 @@ class StudyTracker:
 		else:
 			course_id = arg_list[0]
 			course_new_name = " ".join(arg_list[1:])
-			updated_course = self.db.update_course(course_id, course_new_name)
-			if updated_course is None:
-				return
-
-			print(f"Course updated to {updated_course}")
+			try:
+				updated_course = self.db.update_course(course_id, course_new_name)
+				if updated_course is None:
+					return
+				print(f"Course updated to \n{updated_course}")
+			except Exception as e:
+				print(f"Error when updating course {course_id} to new name: {course_new_name}")
 
 
 	def remove_course(self, arg_list: list[str]) -> None:
