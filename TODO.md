@@ -13,6 +13,8 @@
 - [ ] Add a third column in the `Courses` table in `database_manager` that displays the number of linked sessions to each course.
 - [ ] Add `try-except` blocks where needed.
 - [ ] Adapt `session.py`: Add the `__str__` function.
+- [ ] Add a remove all command that empties the table (for courses and sessions)
+
 
 ### Viewing functionality:
 - [ ] Viewing a course with an `id` as a parameter shows: `id`, `name`, (amount of sessions).

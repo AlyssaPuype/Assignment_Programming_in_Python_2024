@@ -33,14 +33,14 @@ class StudyTracker:
 			print(f"Course name is missing. Use command like: add course [course_name]")
 			return
 		course_name = " ".join(arg_list[0:])
-		added_course = self.db.create_course(course_name)
-		
-		if added_course is None:
+		try:
+			added_course = self.db.create_course(course_name)
+			if added_course is None:
+				return
+			print(f"{added_course} added")
+		except Exception as e:
 			print(f"Error when trying to add {course_name}. Course probably already exists.\n")
 			print(self.db.read_all_courses())
-			return
-
-		print(f"{added_course} added")
 
 	def view_course(self, arg_list: list[str]) -> None:
 
@@ -58,7 +58,7 @@ class StudyTracker:
 				return
 			print(f"{viewed_course}")
 		except Exception as e:
-			print("hallo")
+			print(f"Error when trying to view course {course_id}")
 
 
 	"""updates name of the course"""
@@ -72,13 +72,10 @@ class StudyTracker:
 				updated_course = self.db.update_course(course_id, course_new_name)
 				if updated_course is None:
 					return
-				print(f"Course updated to {course_new_name} \n {updated_course}")
-				try:
-					self.view_course([])
-				except Exception as e:
-					print(f"Error when trying to show all courses")
+				print(f"Course updated to {course_new_name}")
 			except Exception as e:
-				print(f"Error when updating course {course_id} to new name: {course_new_name}")
+				print(f"Error when updating course {course_id} to new name: {course_new_name}. Course probably already exists. \n")
+				print(self.db.read_all_courses())
 
 
 	def remove_course(self, arg_list: list[str]) -> None:

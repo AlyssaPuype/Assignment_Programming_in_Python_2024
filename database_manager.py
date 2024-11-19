@@ -49,12 +49,12 @@ class DatabaseManager:
 
 	"""CREATE"""
 	"""adds a course when given a name as parameter"""
-	def create_course(self, name: str) -> Course:
-		try:	
-			self.cursor.execute("INSERT INTO Courses (name) VALUES (?)", (name,))
-			self.con.commit()
+	def create_course(self, name: str) -> Course:	
+		self.cursor.execute("INSERT INTO Courses (name) VALUES (?)", (name,))
+		self.con.commit()
+		if self.cursor.rowcount > 0:
 			return Course(self.cursor.lastrowid, name)
-		except sqlite3.IntegrityError as e:
+		else:
 			return None
 
 
