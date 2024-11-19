@@ -37,20 +37,22 @@ while True:
 		            tracker.remove_course(command_args)
 		        case "view":
 		            tracker.view_course(command_args)
-		        case "update":
+		        case "edit":
 		            tracker.update_course(command_args)
+		        case "export":
+		        	tracker.export_course(command_args)
 		        case _:
 		        	print("Unknown command. Type 'help' to see the list of commands")
 		elif model_name == "session":
 		    match action_name:
 		        case "add":
-		            tracker.addSession(command_args)
+		            tracker.add_session(command_args)
 		        case "remove":
-		            tracker.removeSession(command_args)
+		            tracker.remove_session(command_args)
 		        case "view":
-		            tracker.getSession(command_args)
-		        case "update":
-		            tracker.updateSession(command_args)
+		            tracker.get_session(command_args)
+		        case "edit":
+		            tracker.update_session(command_args)
 		        case _:
 		        	print("Unknown command. Type 'help' to see the list of commands")
 		else:

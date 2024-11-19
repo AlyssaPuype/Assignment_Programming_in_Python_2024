@@ -12,17 +12,18 @@ class StudyTracker:
 	def show_commands(self) -> None:
 		print("List of commands:")
 		print("""
-		Courses:
-			- 'add course [course_name]'
-			- 'remove course [course_id]'
-			- 'view course [course_id]. When no course ID is given, it will show all courses'
-			- 'update course [course_id]'
-		-------------------------------------------------------------------------------------
-		Sessions:
-			- 'add session [course_id, date, subject, status, hours]'
-			- 'remove session [session_id]'
-			- 'view session [session_id]'
-			- 'update session [column, new content]'
+	Courses:
+	- 'add course [course_name]'
+	- 'remove course [course_id]' - When no course ID is given, it will prompt you to clear the table
+	- 'view course [course_id]' - When no course ID is given, it will show all courses'
+	- 'edit course [course_id] [new_course_name]' - Changes the name of the course to a new given one
+	- 'export course' [csv]/[xlsx] - exports data of the course table into a cvs or excel
+	-------------------------------------------------------------------------------------------
+	Sessions:
+	- 'add session [course_id, date, subject, status, hours]'
+	- 'remove session [session_id]'
+	- 'view session [session_id]'
+	- 'edit session [column, new content]'
 		""")
 
 
