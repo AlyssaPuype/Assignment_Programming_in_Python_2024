@@ -90,6 +90,7 @@ class StudyTracker:
 					if confirmation.lower() == "y":
 						if self.db.delete_all_courses():
 							print("Course table cleared.")
+							return False
 						else:
 							print("Table is already empty.")
 					elif confirmation.lower() == "n":

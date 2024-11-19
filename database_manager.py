@@ -100,7 +100,7 @@ class DatabaseManager:
 
 	def delete_all_courses(self) -> bool:
 		self.cursor.execute("DELETE FROM Courses")
-		self.cursor.commit()
+		self.con.commit()
 		if self.cursor.rowcount > 0:
 			return True
 		else:
