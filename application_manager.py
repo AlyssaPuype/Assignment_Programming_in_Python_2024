@@ -46,7 +46,11 @@ class StudyTracker:
 
 		"""if no parameter is given, show all current courses"""
 		if not arg_list:
-			print(self.db.read_all_courses())
+			list_courses = self.db.read_all_courses()
+			if list_courses is None: 
+				print("Table is empty. Add courses to fill the table")
+				return
+			print(list_courses)
 			return
 
 		"""if course_id is given as parameter, show the course info"""
@@ -80,16 +84,33 @@ class StudyTracker:
 
 	def remove_course(self, arg_list: list[str]) -> None:
 		if not arg_list:
-			print("Arguments are missing. Use command like: remove course [course_id]")
-			return
+			try:
+				while True:
+					confirmation = input("Are you sure you want to clear the Courses table? Confirm with 'Y'/'N': ")
+					if confirmation.lower() == "y":
+						if self.db.delete_all_courses():
+							print("Course table cleared.")
+						else:
+							print("Table is already empty.")
+					elif confirmation.lower() == "n":
+						return False
+					else:
+						print("invalid answer. Type 'Y' to clear table or 'N' to cancel")
+				else: 
+					print("Unknown command. Use command like: remove course all")
+			except Exception as e:
+				print("Error when trying to clear table")
+				return
+
 		course_id = arg_list[0]
 		try:
 			removed_course = self.db.delete_course(course_id)
 			if not removed_course:
 				return
-			print(f"{course_id} is removed from table")
+			print(f"Course {course_id} is removed from table")
 		except Exception as e:
-			print(f"Error when trying to remove course {course_id}")
+				print(f"Error when trying to remove course {course_id}")
+		
 
 
 	"""session related methods:
@@ -107,3 +128,4 @@ class StudyTracker:
 
 	def updateSession():
 	"""
+

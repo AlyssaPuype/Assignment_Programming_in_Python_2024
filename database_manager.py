@@ -73,6 +73,8 @@ class DatabaseManager:
 	def read_all_courses(self) -> pd.DataFrame:
 		query = "SELECT * FROM Courses"
 		df = pd.read_sql_query(query, self.con)
+		if df.empty:
+			return None
 		return df
 
 
@@ -96,7 +98,16 @@ class DatabaseManager:
 			return False
 
 
-	"""lose the connection"""
+	def delete_all_courses(self) -> bool:
+		self.cursor.execute("DELETE FROM Courses")
+		self.cursor.commit()
+		if self.cursor.rowcount > 0:
+			return True
+		else:
+			return False
+
+
+	"""close the connection"""
 	def close(self) -> None:
 		try:
 			self.con.close()
