@@ -44,16 +44,30 @@ class StudyTracker:
 			self.db.read_all_courses()
 			return
 
+		print("All courses shown")
+
 		"""if course_id is given as parameter, show the course info"""
 		course_id = arg_list[0]
 		viewed_coursed = self.db.read_course(course_id)
 		if viewed_coursed is None:
 			return
 
-		#print(f"{viewed_coursed.id} | {viewed_coursed.name}")
+		print(f"Shown course: viewed_coursed")
 
-	def edit_course():
-		pass
+
+	"""updates name of the course"""
+	def update_course(self, arg_list: list[str]) -> None:
+		if len(arg_list) < 2:
+			print("Arguments are missing. Use command like: update course [course_id] [course_new_name]")
+		else:
+			course_id = arg_list[0]
+			course_new_name = " ".join(arg_list[1:])
+			updated_course = self.db.update_course(course_id, course_new_name)
+			if updated_course is None:
+				return
+
+			print(f"Course updated to {updated_course}")
+
 
 	def remove_course(self, arg_list: list[str]) -> None:
 		course_id = arg_list[0]

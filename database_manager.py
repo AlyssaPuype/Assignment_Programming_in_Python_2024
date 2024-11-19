@@ -46,18 +46,20 @@ class DatabaseManager:
 			print(f"Error when creating tables: {e}")
 			self.con.rollback() 
 
-	"""queries"""
 
+	"""CREATE"""
 	"""adds a course when given a name as parameter"""
 	def create_course(self, name: str) -> Course:
 		try:
 			self.cursor.execute("INSERT INTO Courses (name) VALUES (?)", (name,))
 			self.con.commit()
 			return Course(self.cursor.lastrowid, name)
-		except sqlite3.Error as e:
+		except Exception as e:
 			print(f"Error when adding {name} to Courses: {e}")
 			self.con.rollback()
 
+
+	"""READ"""
 	"""gets info about the course when given a course_id as parameter"""
 	def read_course(self, course_id: int) -> Course:
 		try:
@@ -70,9 +72,9 @@ class DatabaseManager:
 		except Exception as e:
 			print(f"Error when reading {course_id}: {e}")
 			
-
-	"""if no parameters are given, the command should display a list of all added courses.
-	   if no courses are found, a message is shown
+	"""
+	if no parameters are given, the command should display a list of all added courses.
+	if no courses are found, a message is shown
 	"""
 	def read_all_courses(self) -> None:
 		try:
@@ -85,9 +87,22 @@ class DatabaseManager:
 		except Exception as e:
 			print(f"Error when reading all courses: {e}")
 
-	def update_course(self, course_id: int):
-		pass
 
+	"""UPDATE"""
+	"""updates the name of a course"""
+	def update_course(self, course_id: int, course_new_name: str):
+		try:
+			self.cursor.execute("UPDATE Courses SET name=? WHERE id=?", (course_new_name, course_id))
+			self.con.commit()
+			if self.cursor.rowcount > 0:
+				print(f"Course with id {course_id} has been succesfully updated to new name: {course_new_name}")
+			else:
+				print(f"No courses found to update wih id: {course_id}")
+			return course_new_name
+		except Exception as e:
+			print(f"Error when updating course {course_id} to new name: {course_new_name}")
+
+	"""DELETE"""
 	def delete_course(self, course_id: int) -> None:
 		try:
 			self.cursor.execute("DELETE FROM Courses WHERE id=?", (course_id,))
@@ -98,7 +113,6 @@ class DatabaseManager:
 				print(f"Course with ID {course_id} has been succesfully removed")
 			else:
 				print(f"No courses found to remove with ID: {course_id}")
-
 		except sqlite3.Error as e:
 			print(f"Error when deleting course with ID: {course_id}: {e}")
 			self.con.rollback()
