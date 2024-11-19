@@ -50,7 +50,7 @@ class StudyTracker:
 		if viewed_coursed is None:
 			return
 
-		print(f"{viewed_coursed.id} | {viewed_coursed.name}")
+		#print(f"{viewed_coursed.id} | {viewed_coursed.name}")
 
 	def edit_course():
 		pass

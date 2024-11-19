@@ -42,8 +42,7 @@ class DatabaseManager:
 
 		except sqlite3.Error as e:
 			print(f"Error when creating tables: {e}")
-			self.con.rollback()
-
+			self.con.rollback() 
 
 	"""queries"""
 
