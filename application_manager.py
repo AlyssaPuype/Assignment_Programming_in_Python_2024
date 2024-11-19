@@ -41,18 +41,19 @@ class StudyTracker:
 
 		"""if no parameter is given, show all current courses"""
 		if not arg_list:
-			self.db.read_all_courses()
+			print(self.db.read_all_courses())
 			return
-
-		print("All courses shown")
 
 		"""if course_id is given as parameter, show the course info"""
 		course_id = arg_list[0]
-		viewed_coursed = self.db.read_course(course_id)
-		if viewed_coursed is None:
-			return
-
-		print(f"Shown course: viewed_coursed")
+		try:
+			viewed_course = self.db.read_course(course_id)
+			if viewed_course is None:
+				print(f"Course with ID {course_id} does not exist.")
+			else:
+				print(f"{viewed_course}")
+		except Exception as e:
+			print("hallo")
 
 
 	"""updates name of the course"""
@@ -66,7 +67,11 @@ class StudyTracker:
 				updated_course = self.db.update_course(course_id, course_new_name)
 				if updated_course is None:
 					return
-				print(f"Course updated to \n{updated_course}")
+				print(f"Course updated to {course_new_name} \n {updated_course}")
+				try:
+					self.view_course([])
+				except Exception as e:
+					print(f"Error when trying to show all courses")
 			except Exception as e:
 				print(f"Error when updating course {course_id} to new name: {course_new_name}")
 

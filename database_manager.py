@@ -64,22 +64,17 @@ class DatabaseManager:
 	def read_course(self, course_id: int) -> pd.DataFrame:
 		query = "SELECT id, name FROM Courses WHERE id=?"
 		df = pd.read_sql_query(query, self.con, params=(course_id,))
+		if df.empty:
+			return None
 		return df
 			
 	"""
-	if no parameters are given, the command should display a list of all added courses.
-	if no courses are found, a message is shown
+	if no parameters are given, the command displays a list of all added courses.
 	"""
-	def read_all_courses(self) -> None:
-		try:
-			query = "SELECT * FROM Courses"
-			df = pd.read_sql_query(query, self.con)
-			if df.empty:
-				print("No courses were found")
-			else: 
-				print(df)
-		except Exception as e:
-			print(f"Error when reading all courses: {e}")
+	def read_all_courses(self) -> pd.DataFrame:
+		query = "SELECT * FROM Courses"
+		df = pd.read_sql_query(query, self.con)
+		return df
 
 
 	"""UPDATE"""
