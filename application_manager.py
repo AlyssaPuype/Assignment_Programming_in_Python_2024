@@ -29,6 +29,9 @@ class StudyTracker:
 	"""course related methods:"""
 
 	def add_course(self, arg_list: list[str]) -> None:
+		if not arg_list:
+			print(f"Course name is missing. Use command like: add course [course_name]")
+			return
 		course_name = " ".join(arg_list[0:])
 		added_course = self.db.create_course(course_name)
 		
