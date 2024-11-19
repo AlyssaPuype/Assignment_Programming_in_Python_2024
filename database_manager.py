@@ -78,28 +78,23 @@ class DatabaseManager:
 
 	"""UPDATE"""
 	"""updates the name of a course"""
-	def update_course(self, course_id: int, course_new_name: str) -> Course:
+	def update_course(self, course_id: int, course_new_name: str) -> bool:
 		self.cursor.execute("UPDATE Courses SET name=? WHERE id=?", (course_new_name, course_id))
 		self.con.commit()
 		if self.cursor.rowcount > 0:
-			return self.read_course(course_id)
+			return True
 		else:
-			return None
+			return False
 
 	"""DELETE"""
-	def delete_course(self, course_id: int) -> None:
-		try:
-			self.cursor.execute("DELETE FROM Courses WHERE id=?", (course_id,))
-			self.con.commit()
+	def delete_course(self, course_id: int) -> bool:
+		self.cursor.execute("DELETE FROM Courses WHERE id=?", (course_id,))
+		self.con.commit()
+		if self.cursor.rowcount > 0:
+			return True
+		else:
+			return False
 
-			#row count return the amount of affected rows in last query, so we check if it was indeed removed, if not, means it did not exists:
-			if self.cursor.rowcount > 0 :
-				print(f"Course with ID {course_id} has been succesfully removed")
-			else:
-				print(f"No courses found to remove with ID: {course_id}")
-		except sqlite3.Error as e:
-			print(f"Error when deleting course with ID: {course_id}: {e}")
-			self.con.rollback()
 
 	"""lose the connection"""
 	def close(self) -> None:

@@ -12,17 +12,17 @@ class StudyTracker:
 	def show_commands(self) -> None:
 		print("List of commands:")
 		print("""
-			Courses:
-				- 'add course [course_name]'
-				- 'remove course [course_id]'
-				- 'view course [course_id]. When no course ID is given, it will show all courses'
-				- 'update course [course_id]'
-			-------------------------------------------------------------------------------------
-			Sessions:
-				- 'add session [course_id, date, subject, status, hours]'
-				- 'remove session [session_id]'
-				- 'view session [session_id]'
-				- 'update session [column, new content]'
+		Courses:
+			- 'add course [course_name]'
+			- 'remove course [course_id]'
+			- 'view course [course_id]. When no course ID is given, it will show all courses'
+			- 'update course [course_id]'
+		-------------------------------------------------------------------------------------
+		Sessions:
+			- 'add session [course_id, date, subject, status, hours]'
+			- 'remove session [session_id]'
+			- 'view session [session_id]'
+			- 'update session [column, new content]'
 		""")
 
 
@@ -70,7 +70,7 @@ class StudyTracker:
 			course_new_name = " ".join(arg_list[1:])
 			try:
 				updated_course = self.db.update_course(course_id, course_new_name)
-				if updated_course is None:
+				if not updated_course:
 					return
 				print(f"Course updated to {course_new_name}")
 			except Exception as e:
@@ -79,12 +79,17 @@ class StudyTracker:
 
 
 	def remove_course(self, arg_list: list[str]) -> None:
-		course_id = arg_list[0]
-		removed_course = self.db.delete_course(course_id)
-		if removed_course is None:
+		if not arg_list:
+			print("Arguments are missing. Use command like: remove course [course_id]")
 			return
-
-		print(f"{removed_course} is removed from table")
+		course_id = arg_list[0]
+		try:
+			removed_course = self.db.delete_course(course_id)
+			if not removed_course:
+				return
+			print(f"{course_id} is removed from table")
+		except Exception as e:
+			print(f"Error when trying to remove course {course_id}")
 
 
 	"""session related methods:
