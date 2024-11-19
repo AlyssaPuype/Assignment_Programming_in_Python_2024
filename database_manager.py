@@ -1,4 +1,6 @@
 import sqlite3
+import pandas as pd #using pandas for read queries
+
 
 from models.course import Course
 from models.session import Session
@@ -59,32 +61,29 @@ class DatabaseManager:
 	"""gets info about the course when given a course_id as parameter"""
 	def read_course(self, course_id: int) -> Course:
 		try:
-			self.cursor.execute("SELECT id, name FROM Courses WHERE id=?", (course_id,))
-			row_result = self.cursor.fetchone()
-			if row_result:
-				return Course(row_result[0], row_result[1])
-			else:
+			query = "SELECT id, name FROM Courses WHERE id=?"
+			df = pd.read_sql_query(query, self.con, params=(course_id,))
+			if df.empty:
 				print(f"No course found with ID: {course_id}")
-				return None
-		except sqlite3.Error as e:
+			else:
+				print(df)
+		except Exception as e:
 			print(f"Error when reading {course_id}: {e}")
-			self.con.rollback()
+			
 
 	"""if no parameters are given, the command should display a list of all added courses.
 	   if no courses are found, a message is shown
 	"""
 	def read_all_courses(self) -> None:
 		try:
-			self.cursor.execute("SELECT * FROM Courses")
-			show_result = self.cursor.fetchall()
-			if show_result:
-				for row in show_result:
-					print(f"{row[0]} | {row[1]}")
-			else:
+			query = "SELECT * FROM Courses"
+			df = pd.read_sql_query(query, self.con)
+			if df.empty:
 				print("No courses were found")
-		except sqlite3.Error as e:
+			else: 
+				print(df)
+		except Exception as e:
 			print(f"Error when reading all courses: {e}")
-			self.con.rollback()
 
 	def update_course(self, course_id: int):
 		pass
@@ -102,7 +101,7 @@ class DatabaseManager:
 
 		except sqlite3.Error as e:
 			print(f"Error when deleting course with ID: {course_id}: {e}")
-			self.con.rollback
+			self.con.rollback()
 
 	"""lose the connection"""
 	def close(self) -> None:
