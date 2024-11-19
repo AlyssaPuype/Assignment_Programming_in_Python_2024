@@ -36,6 +36,8 @@ class StudyTracker:
 		added_course = self.db.create_course(course_name)
 		
 		if added_course is None:
+			print(f"Error when trying to add {course_name}. Course probably already exists.\n")
+			print(self.db.read_all_courses())
 			return
 
 		print(f"{added_course} added")
@@ -53,8 +55,8 @@ class StudyTracker:
 			viewed_course = self.db.read_course(course_id)
 			if viewed_course is None:
 				print(f"Course with ID {course_id} does not exist.")
-			else:
-				print(f"{viewed_course}")
+				return
+			print(f"{viewed_course}")
 		except Exception as e:
 			print("hallo")
 

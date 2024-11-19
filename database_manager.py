@@ -50,13 +50,12 @@ class DatabaseManager:
 	"""CREATE"""
 	"""adds a course when given a name as parameter"""
 	def create_course(self, name: str) -> Course:
-		try:
+		try:	
 			self.cursor.execute("INSERT INTO Courses (name) VALUES (?)", (name,))
 			self.con.commit()
 			return Course(self.cursor.lastrowid, name)
-		except Exception as e:
-			print(f"Error when adding {name} to Courses: {e}")
-			self.con.rollback()
+		except sqlite3.IntegrityError as e:
+			return None
 
 
 	"""READ"""
@@ -84,6 +83,8 @@ class DatabaseManager:
 		self.con.commit()
 		if self.cursor.rowcount > 0:
 			return self.read_course(course_id)
+		else:
+			return None
 
 	"""DELETE"""
 	def delete_course(self, course_id: int) -> None:
