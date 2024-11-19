@@ -69,7 +69,7 @@ class StudyTracker:
 	"""updates name of the course"""
 	def update_course(self, arg_list: list[str]) -> None:
 		if len(arg_list) < 2:
-			print("Arguments are missing. Use command like: update course [course_id] [course_new_name]")
+			print("Arguments are missing. Use command like: edit course [course_id] [course_new_name]")
 		else:
 			course_id = arg_list[0]
 			course_new_name = " ".join(arg_list[1:])
@@ -77,9 +77,9 @@ class StudyTracker:
 				updated_course = self.db.update_course(course_id, course_new_name)
 				if not updated_course:
 					return
-				print(f"Course updated to {course_new_name}")
+				print(f"Course editing to {course_new_name}")
 			except Exception as e:
-				print(f"Error when updating course {course_id} to new name: {course_new_name}. Course probably already exists. \n")
+				print(f"Error when editing course {course_id} to new name: {course_new_name}. Course probably already exists. \n")
 				print(self.db.read_all_courses())
 
 
@@ -116,9 +116,6 @@ class StudyTracker:
 
 
 	"""session related methods:
-	def removeCourse():
-
-	def getCourse():
 
 	def updateCourse():
 
