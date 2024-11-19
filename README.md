@@ -16,8 +16,6 @@ You can also add and remove and view sessions and courses.
 
 ### export data:
 
-The application uses Python's built in csv and excel module
-
 
 
 ## Notes for myself (delete or adapt after):
