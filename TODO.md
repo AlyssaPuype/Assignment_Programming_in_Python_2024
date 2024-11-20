@@ -1,13 +1,12 @@
 
-### Completed tasks:
+### Tasks:
 - [x] Add full implementation for `create_course` (works).
 - [x] Add continuous request for input.
 - [x] Add help command for the user to see a list of available commands.
-
-### Remaining tasks:
 - [ ] Add the remaining queries in `database_manager.py`
   - [x] Add `read_course` query in `database_manager.py`.
   - [x] Add `view_course` query.
+  - [x] Add `update_course` query.
   - [x] Add `remove_course` query.
 - [ ] Add the remaining methods in `application_manager.py`.
 - [ ] Add a third column in the `Courses` table in `database_manager` that displays the number of linked sessions to each course.
@@ -20,8 +19,8 @@
 - [ ] When clearing tables, prompt the user if they wanna export the data first
 
 ### Viewing functionality:
-- [ ] Viewing a course with an `id` as a parameter shows: `id`, `name`, (amount of sessions).
-- [ ] Viewing a course with no parameters shows all courses.
+- [x] Viewing a course with an `id` as a parameter shows: `id`, `name`, (amount of sessions).
+- [x] Viewing a course with no parameters shows all courses.
 - [ ] Viewing a session with an `id` as a parameter shows: `id`, `course id` (name?), `date` (check format), `subject`, `status`, `hours`.
 - [ ] Viewing a session with `course_id` as a parameter shows all sessions for that course.
 - [ ] Viewing a session with `date` as a parameter shows all sessions for that date.
