@@ -1,8 +1,8 @@
 # Study Tracker application
 
 The application is used to track your studyprogress, by adding courses and studysessions. 
-You can then edit and export your sessions into a csv or excel file.
-You can also add and remove and view sessions and courses.
+You can add, remove, edit, view and export courses and sessions. 
+
 
 ## How to install:
 
