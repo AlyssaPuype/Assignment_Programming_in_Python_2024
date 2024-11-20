@@ -14,16 +14,16 @@ class StudyTracker:
 		print("List of commands:")
 		print("""
 	Courses:
-	- 'add course [course_name]'
-	- 'remove course [course_id]' - When no course ID is given, it will prompt you to clear the table
-	- 'view course [course_id]' - When no course ID is given, it will show all courses'
-	- 'edit course [course_id] [new_course_name]' - Changes the name of the course to a new given one
+	- 'add course [course name]'
+	- 'remove course [course id]' - When no course ID is given, it will prompt you to clear the table
+	- 'edit course [course id] [new course name]' - Changes the name of the course to a new given one
+	- 'view course [course id]' - When no course ID is given, it will show all courses'
 	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
 	Sessions:
 	- 'add session [course_id, date, subject, status, hours]'
-	- 'remove session [session_id]'
-	- 'view session [session_id]'
+	- 'remove session [session id]'
+	- 'view session [session id]'
 	- 'edit session [column, new content]'
 		""")
 

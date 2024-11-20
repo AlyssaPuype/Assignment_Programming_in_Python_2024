@@ -14,14 +14,22 @@ You can also add and remove and view sessions and courses.
 ## How to use:
 
 
-### export data:
+## Commands explained:
 
+Courses:
 
+- `add course [course name]` : Adds new course with name given. Argument required.
+- `remove course [course id]` : Removes course with given id. When no parameter is given: prompts the user to clear table
+- `edit course [course id] [new course name]` : Updates name of course with given id to new given name. All Arguments required.
+- `view course [course id]`: Displays course with given id. When no parameter is given: displays all courses
+- `export course [csv]/[excel] [file name]`: Exports all data to csv or excel file with given file name. All arguments required.
 
-## Notes for myself (delete or adapt after):
+Sessions:
 
-- Database manager = handles how the interaction w the database is done, so the actual queries
-- Application manager = handles what is done (add, remove, edit, view,...)
-- interaction flow: *User -> main.py -> application_manager -> database_manager -> database*
+- `add session`:
+- `remove session [session id]`: Removes session with given id. When no parameter is given: prompts the user to clear table.
+- `edit session`: 
+- `view session`: 
+- `export session [csv]/[excel] [file name]`: Exports all data to CSV or Excel file with given file name. All arguments required.
 
 
