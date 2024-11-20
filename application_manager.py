@@ -1,7 +1,9 @@
 """ interaction with database manager to add, remove, edit, fetch data from the database"""
 
+from datetime import datetime
 from database_manager import DatabaseManager
 from exporter import Export
+
 
 class StudyTracker:
 
@@ -103,7 +105,55 @@ class StudyTracker:
 					print("Unknown command. Use command like: remove course all")
 			except Exception as e:
 				print("Error when trying to clear table")
-				
+	
+
+	def add_session(self, arg_list: list[str])-> None:
+		if not arg_list or len(arg_list) < 5:
+			print(f"Arguments are missing. Use command like: add session [course_id] [date] [subject] [status] [hours]")
+			return
+
+		course_id = arg_list[0]
+		date = arg_list[1]
+		subject = " ".join(arg_list[2:-2])
+		status = arg_list[-2] 
+		hours = float(arg_list[-1])
+
+		if self.db.read_course(course_id).empty:
+			print(f"Course id does not exist. Enter a valid course id")
+			return
+
+		if date is None:
+			print("Invalid date format. Enter date in format dd-mm-yyyy")
+			return
+
+		if not subject:
+			print("Argument subject is missing . If you mean to specify no subject, you need to use '-' ")
+			return
+
+		if status.lower() not in {"td", "ip", "d"}:
+			print("Invalid status. Enter status as 'to do' or 'in progress' or 'done'")
+			return
+
+		if not isinstance(hours, float):
+			print("Invalid hours type. Enter hours as a number")
+			return
+
+		print("It works")
+
+
+	def get_date(self, date: str) -> str:
+		"""
+		gets the date from input as a string, converts it to an object to check valid format and returns it as a string when correct, if not, returns None
+		"""
+		try:
+			 date_object = datetime.strptime(date, "%d-%m-%y").date()
+			 return date_object.strftime("%d-%m-%y")
+		except ValueError as e:
+			return None
+		
+
+
+	"""Export methods"""
 
 	def export_course(self, arg_list: list[str])-> None:
 		exporter = Export(self.db)
@@ -143,6 +193,7 @@ class StudyTracker:
 		except Exception as e:
 				print(f"Error when trying to remove course {course_id}")
 		
+
 
 
 	"""session related methods:

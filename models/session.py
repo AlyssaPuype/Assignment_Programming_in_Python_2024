@@ -9,3 +9,6 @@ class Session:
 		self.subject = subject
 		self.status = status
 		self.hours = hours
+
+	def __str__(self) -> str:
+		return f"Id: {self.id} | Course_id: {self.course_id} | Date: {date} | Subject: {subject} | Status: {status}"

@@ -31,11 +31,11 @@ class DatabaseManager:
 			self.cursor.execute("""
 			    CREATE TABLE IF NOT EXISTS Sessions (
 			        id INTEGER PRIMARY KEY AUTOINCREMENT,
-			        course_id INTEGER NOT NULL,
-			        date TEXT NOT NULL,
+			        course id INTEGER NOT NULL,
+			        date_created TEXT NOT NULL,
 			        subject TEXT NOT NULL,
 			        status TEXT CHECK(status IN ('to do', 'in progress', 'done')),
-			        hours INTEGER NOT NULL,
+			        hours REAL NOT NULL,
 			        FOREIGN KEY (course_id) REFERENCES Courses(id)
 			    );
 			""")
@@ -105,6 +105,20 @@ class DatabaseManager:
 			return True
 		else:
 			return False
+
+	def create_session(self, course_id: int, date_created: str, subject: str, status: str, hours: float) -> Session:
+		self.cursor.execute("INSERT INTO Sessions (course id, date_created, subject, status, hours) VALUES(?,?,?,?)", (course_id, date_created, subject, status, hours))
+		self.con.commit()
+		if self.cursor.rowcount > 0:
+			return Session(self.cursor.lastrowid, course_id, date_created, subject, status, hours)
+		else:
+			return None
+
+	def read_session(self, session_id, course_id) -> pd.DataFrame:
+		pass
+
+	def read_all_sessions() -> pd.DataFrame:
+		pass
 
 	"""close the connection"""
 	def close(self) -> None:
