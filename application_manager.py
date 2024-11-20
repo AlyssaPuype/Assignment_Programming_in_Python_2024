@@ -140,7 +140,8 @@ class StudyTracker:
 			return
 
 		try:
-			pass
+			self.db.create_session(course_id, date, subject, status, hours)
+			
 		except Exception as e:
 			print("Error when trying to create session")
 
