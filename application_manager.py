@@ -113,17 +113,18 @@ class StudyTracker:
 			return
 
 		course_id = arg_list[0]
+		course_df = self.db.read_course(course_id)
 		date = arg_list[1]
 		subject = " ".join(arg_list[2:-2])
 		status = arg_list[-2] 
 		hours = float(arg_list[-1])
 
-		if self.db.read_course(course_id).empty:
-			print(f"Course id does not exist. Enter a valid course id")
+		if course_df is None:
+			print(f"Course id {course_id} does not exist. Enter a valid course id")
 			return
 
 		if date is None:
-			print("Invalid date format. Enter date in format dd-mm-yyyy")
+			print(f" {date} is an invalid date format. Enter date in format dd-mm-yyyy")
 			return
 
 		if not subject:
@@ -131,14 +132,17 @@ class StudyTracker:
 			return
 
 		if status.lower() not in {"td", "ip", "d"}:
-			print("Invalid status. Enter status as 'to do' or 'in progress' or 'done'")
+			print(f" {status} is an invalid status. Enter status as 'td' for 'to do', 'ip' for 'in progress' or 'd' for 'done' ")
 			return
 
 		if not isinstance(hours, float):
-			print("Invalid hours type. Enter hours as a number")
+			print(f"{hours} is an invalid type. Enter hours as a number")
 			return
 
-		print("It works")
+		try:
+			pass
+		except Exception as e:
+			print("Error when trying to create session")
 
 
 	def get_date(self, date: str) -> str:
