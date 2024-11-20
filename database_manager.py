@@ -1,5 +1,5 @@
 import sqlite3
-import pandas as pd #using pandas for read queries
+import pandas as pd
 
 
 from models.course import Course
@@ -105,7 +105,6 @@ class DatabaseManager:
 			return True
 		else:
 			return False
-
 
 	"""close the connection"""
 	def close(self) -> None:

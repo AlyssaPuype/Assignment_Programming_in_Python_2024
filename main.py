@@ -53,6 +53,8 @@ while True:
 		            tracker.get_session(command_args)
 		        case "edit":
 		            tracker.update_session(command_args)
+		        case "export":
+		        	tracker.export_session(command_args)
 		        case _:
 		        	print("Unknown command. Type 'help' to see the list of commands")
 		else:

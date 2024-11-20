@@ -1,6 +1,7 @@
 """ interaction with database manager to add, remove, edit, fetch data from the database"""
 
 from database_manager import DatabaseManager
+from exporter import Export
 
 class StudyTracker:
 
@@ -17,7 +18,7 @@ class StudyTracker:
 	- 'remove course [course_id]' - When no course ID is given, it will prompt you to clear the table
 	- 'view course [course_id]' - When no course ID is given, it will show all courses'
 	- 'edit course [course_id] [new_course_name]' - Changes the name of the course to a new given one
-	- 'export course' [csv]/[xlsx] - exports data of the course table into a cvs or excel
+	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
 	Sessions:
 	- 'add session [course_id, date, subject, status, hours]'
@@ -102,7 +103,36 @@ class StudyTracker:
 					print("Unknown command. Use command like: remove course all")
 			except Exception as e:
 				print("Error when trying to clear table")
-				return
+				
+
+	def export_course(self, arg_list: list[str])-> None:
+		exporter = Export(self.db)
+
+		if not arg_list or len(arg_list) < 2:
+			print("Arguments are missing. Use command like: export course [csv]/[excel] [name_file]")
+			return
+		
+		export_type = arg_list[0].lower()
+		export_name = arg_list [1]
+		if export_type not in {"csv", "excel"}:
+			print("Invalid export type. Use [csv] or [exce] as export type")
+			return
+		if export_name in {"csv", "excel"}:
+			print("Filename can not be export type. Please use a valid filename")
+			return
+
+		try:
+			if export_type == "csv":
+				exporter.export_to_csv(export_name)
+				print(f"Table Courses exported to csv file with as {export_name}")
+			elif export_type == "excel":
+				exporter.export_to_excel(export_name)
+				print(f"Table Courses exported to excel file with as {export_name}")
+		except Exception as e:
+			print(f"Error when exporting data: {e}")
+
+	def export_session(self, arg_list: list[str]):
+		pass
 
 		course_id = arg_list[0]
 		try:
