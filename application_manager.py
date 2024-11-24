@@ -225,7 +225,7 @@ class StudyTracker:
 			column_name = arg_list[1]
 			new_content = arg_list[3:]
 
-		if column_name not in {""}
+		if column_name:
 			try:
 				session_to_update = self.db.read_session(session_id)
 
