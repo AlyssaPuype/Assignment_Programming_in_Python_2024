@@ -140,10 +140,12 @@ class StudyTracker:
 			return
 
 		try:
-			self.db.create_session(course_id, date, subject, status, hours)
-			
+			added_session = self.db.create_session(course_id, date, subject, status, hours)
+			if added_session is None:
+				return
+			print(f"Session added")
 		except Exception as e:
-			print("Error when trying to create session")
+			print(f"Error when trying to create session: {e}")
 
 
 	def get_date(self, date: str) -> str:

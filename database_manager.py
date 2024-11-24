@@ -31,14 +31,15 @@ class DatabaseManager:
 			self.cursor.execute("""
 			    CREATE TABLE IF NOT EXISTS Sessions (
 			        id INTEGER PRIMARY KEY AUTOINCREMENT,
-			        course id INTEGER NOT NULL,
+			        course_id INTEGER NOT NULL,
 			        date_created TEXT NOT NULL,
 			        subject TEXT NOT NULL,
-			        status TEXT CHECK(status IN ('to do', 'in progress', 'done')),
+			        status TEXT CHECK(status IN ('td', 'ip', 'd')),
 			        hours REAL NOT NULL,
 			        FOREIGN KEY (course_id) REFERENCES Courses(id)
 			    );
 			""")
+
 
 			self.con.commit()
 
@@ -107,7 +108,7 @@ class DatabaseManager:
 			return False
 
 	def create_session(self, course_id: int, date_created: str, subject: str, status: str, hours: float) -> Session:
-		self.cursor.execute("INSERT INTO Sessions (course id, date_created, subject, status, hours) VALUES(?,?,?,?)", (course_id, date_created, subject, status, hours))
+		self.cursor.execute("INSERT INTO Sessions (course_id, date_created, subject, status, hours) VALUES(?,?,?,?,?)", (course_id, date_created, subject, status, hours))
 		self.con.commit()
 		if self.cursor.rowcount > 0:
 			return Session(self.cursor.lastrowid, course_id, date_created, subject, status, hours)
