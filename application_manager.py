@@ -82,11 +82,11 @@ class StudyTracker:
 				updated_course = self.db.update_course(course_id, course_new_name)
 				if not updated_course:
 					return
-				print(f"Course editing to {course_new_name}")
+				print(f"Course editing to '{course_new_name}'\n")
+				print(self.db.read_course(course_id))
 			except Exception as e:
-				print(f"Error when editing course {course_id} to new name: {course_new_name}. Course probably already exists. \n")
-				print(self.db.read_all_courses())
-
+				print(f"Error when editing course {course_id} to '{course_new_name}'. Course probably already exists. \n")
+				return
 
 	def remove_course(self, arg_list: list[str]) -> None:
 		if not arg_list:
@@ -232,16 +232,27 @@ class StudyTracker:
 		if column_name not in {"course_id", "date_created", "subject", "status", "hours"}:
 			print(f"{column_name} does not exist in table. Enter valid column name: 'course_id', 'date_created', 'subject', 'status','hours'")
 			return
+		
+		if column_name == "status" and new_content not in {"td", "ip", "d"}:
+			print(f"{new_content} is an invalid status. Enter status as 'td' for 'to do', 'ip' for 'in progress' or 'd' for 'done' ")
+			return
 
+		if column_name == "course_id":
+			pass
+
+		if column_name == "date_created":
+			pass
+		
 		try:
 			session_to_update = self.db.read_session(session_id)
 			updated_session = self.db.update_session(session_to_update, column_name, new_content)
 			if not updated_session:
-				print("did not work")
+				return
+			print(f"Column '{column_name}'' in Session {session_id} updated to '{new_content}'\n")
+			print(self.db.read_session(session_id))
 		except Exception as e:
 			print(f"Error when trying to update session: {e}")
-			print(self.db.read_all_sessions())
-			traceback.print_exc()
+			return
 
 	"""Export methods"""
 
@@ -263,7 +274,7 @@ class StudyTracker:
 
 		try:
 			exporter.export_course(export_name, export_type)
-			print(f"Table Courses exported to {export_type} file as {export_name}")
+			print(f"Table Courses exported to {export_type} file as '{export_name}'")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
 
@@ -285,7 +296,7 @@ class StudyTracker:
 
 		try:
 			exporter.export_session(export_name, export_type)
-			print(f"Table Sessions exported to {export_type} file as {export_name}")
+			print(f"Table Sessions exported to {export_type} file as '{export_name}'")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
 
