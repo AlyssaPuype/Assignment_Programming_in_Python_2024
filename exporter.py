@@ -9,30 +9,33 @@ class Export:
 	def __init__(self, db: DatabaseManager) -> None:
 		self.db = db
 
-	def export_to_csv(self, name_file: str) -> None:
+	def _export_data(self, data: list, name_file: str, file_type: str) -> None:
 		"""
-		Exports data into csv file 
+		Exports data to CSV or Excel
+		"""
+		df = pd.DataFrame(data)
 
-		Needs filename as argument
-		Uses method from database_manager to fetch the data
+		if file_type == "csv":
+			df.to_csv(name_file, index=False)
+		elif file_type == "excel":
+			if not name_file.endswith(".xlsx"):
+				name_file += ".xlsx"
+			try:
+				df.to_excel(name_file, index=False, engine="openpyxl")
+			except ImportError:
+				print("Error: openpyxl is required to export to Excel.")
+				return
+
+	def export_course(self, name_file: str, file_type: str) -> None:
 		"""
-	
+		Exports course data to the specified file type (CSV or Excel)
+		"""
 		current_data = self.db.read_all_courses()
-		df = pd.DataFrame(current_data)
-		df.to_csv(name_file, index=False)
+		self._export_data(current_data, name_file, file_type)
 
-	def export_to_excel(self,name_file: str) -> None:
+	def export_session(self, name_file: str, file_type: str) -> None:
 		"""
-		Exports data into excel file 
-
-		Needs filename as argument
-		Uses method from database_manager to fetch the data
-		Checks if the file ends with extension .xlsx
-		Openpyxl is required to be installed. Check requirements.txt
+		Exports session data to the specified file type (CSV or Excel)
 		"""
-	
-		current_data = self.db.read_all_courses()
-		df = pd.DataFrame(current_data)
-		if not name_file.endswith(".xlsx"):
-			name_file += ".xlsx"
-			df.to_excel(name_file, index=False)
+		current_data = self.db.read_all_sessions()
+		self._export_data(current_data, name_file, file_type)

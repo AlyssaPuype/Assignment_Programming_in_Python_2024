@@ -129,13 +129,6 @@ class StudyTracker:
 		status = arg_list[-2] 
 		hours = float(arg_list[-1])
 
-		print(f"Course ID: {course_id}")
-		print(f"Date: {date}")
-		print(type(date)) # str
-		print(f"Subject: {subject}")
-		print(f"Status: {status}")
-		print(f"Hours: {hours}")
-
 		if course_df is None:
 			print(f"Course id {course_id} does not exist. Enter a valid course id")
 			return
@@ -246,17 +239,32 @@ class StudyTracker:
 			return
 
 		try:
-			if export_type == "csv":
-				exporter.export_to_csv(export_name)
-				print(f"Table Courses exported to csv file with as {export_name}")
-			elif export_type == "excel":
-				exporter.export_to_excel(export_name)
-				print(f"Table Courses exported to excel file with as {export_name}")
+			exporter.export_course(export_name, export_type)
+			print(f"Table Courses exported to {export_type} file as {export_name}")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
 
-	def export_session(self, arg_list: list[str]):
-		pass
+	def export_session(self, arg_list: list[str])-> None:
+		exporter = Export(self.db)
+
+		if not arg_list or len(arg_list) < 2:
+			print("Arguments are missing. Use command like: export session [csv]/[excel] [name_file]")
+			return
+		
+		export_type = arg_list[0].lower()
+		export_name = arg_list [1]
+		if export_type not in {"csv", "excel"}:
+			print("Invalid export type. Use [csv] or [exce] as export type")
+			return
+		if export_name in {"csv", "excel"}:
+			print("Filename can not be export type. Please use a valid filename")
+			return
+
+		try:
+			exporter.export_session(export_name, export_type)
+			print(f"Table Sessions exported to {export_type} file as {export_name}")
+		except Exception as e:
+			print(f"Error when exporting data: {e}")
 		
 
 
