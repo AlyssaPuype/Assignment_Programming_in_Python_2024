@@ -115,10 +115,27 @@ class DatabaseManager:
 		else:
 			return None
 
-	def read_session(self, session_id, course_id) -> pd.DataFrame:
+	def read_session(self, session_id) -> pd.DataFrame:
+		"""
+		reads a single session
+		"""
+		query = "SELECT id, course_id, date_created, subject, status, hours FROM Sessions WHERE id=?"
+		df = pd.read_sql_query(query, self.con, params=(session_id,))
+		if df.empty:
+			return None
+		return df
+
+
+	def read_all_sessions_for_course(self, course_id) -> pd.DataFrame:
+		"""
+		reads all sessions, linked to the given course_id
+		"""
 		pass
 
-	def read_all_sessions() -> pd.DataFrame:
+	def read_all_sessions(self) -> pd.DataFrame:
+		"""
+		reads all sessions from Session table
+		"""
 		pass
 
 	"""close the connection"""

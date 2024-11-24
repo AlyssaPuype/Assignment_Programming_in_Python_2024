@@ -50,7 +50,7 @@ while True:
 		        case "remove":
 		            tracker.remove_session(command_args)
 		        case "view":
-		            tracker.get_session(command_args)
+		            tracker.view_session(command_args)
 		        case "edit":
 		            tracker.update_session(command_args)
 		        case "export":

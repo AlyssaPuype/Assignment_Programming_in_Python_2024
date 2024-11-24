@@ -62,11 +62,11 @@ class StudyTracker:
 		try:
 			viewed_course = self.db.read_course(course_id)
 			if viewed_course is None:
-				print(f"Course with ID {course_id} does not exist.")
+				print(f"Course with ID {course_id} does not exist")
 				return
 			print(f"{viewed_course}")
 		except Exception as e:
-			print(f"Error when trying to view course {course_id}")
+			print(f"Error when trying to view course {course_id}: {e}")
 
 
 	"""updates name of the course"""
@@ -123,7 +123,7 @@ class StudyTracker:
 			print(f"Course id {course_id} does not exist. Enter a valid course id")
 			return
 
-		if date is None:
+		if self.get_date(date) is None:
 			print(f" {date} is an invalid date format. Enter date in format dd-mm-yyyy")
 			return
 
@@ -143,7 +143,7 @@ class StudyTracker:
 			added_session = self.db.create_session(course_id, date, subject, status, hours)
 			if added_session is None:
 				return
-			print(f"Session added")
+			print(f"{added_session} added for the course {course_id}")
 		except Exception as e:
 			print(f"Error when trying to create session: {e}")
 
@@ -153,11 +153,24 @@ class StudyTracker:
 		gets the date from input as a string, converts it to an object to check valid format and returns it as a string when correct, if not, returns None
 		"""
 		try:
-			 date_object = datetime.strptime(date, "%d-%m-%y").date()
-			 return date_object.strftime("%d-%m-%y")
-		except ValueError as e:
+			 date_object = datetime.strptime(date, "%d-%m-%Y").date()
+			 return date_object.strftime("%d-%m-%Y")
+		except ValueError:
 			return None
-		
+	
+	def view_session(self, arg_list: list[str]) -> None:
+		if not arg_list:
+			pass
+
+		session_id = arg_list[0]
+		try:
+			viewed_session = self.db.read_session(session_id)
+			if viewed_session is None:
+				print(f"Session with ID {session_id} does not exist")
+				return
+			print(f"{viewed_session}")
+		except Exception as e:
+			print(f"Error when trying to view session {session_id}: {e}")
 
 
 	"""Export methods"""
