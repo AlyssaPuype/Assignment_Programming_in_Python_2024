@@ -265,9 +265,19 @@ class StudyTracker:
 			print(f"Table Sessions exported to {export_type} file as {export_name}")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
+
+	def update_session(self, arg_list: list[str]) -> None:
+		if len(arg_list) < 2:
+			print("Arguments are missing. Use command like: edit course [session_id] [column] [new_content]")
+		else:
+			session_id = arg_list[0]
+			column_name = arg_list[1]
+			new content = arg_list [3:]
+			try:
+				pass
+			except Exception as e:
+				pass
 		
-
-
 
 	"""session related methods:
 
