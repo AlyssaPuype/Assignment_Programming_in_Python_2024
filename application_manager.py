@@ -4,6 +4,8 @@ from datetime import datetime
 from database_manager import DatabaseManager
 from exporter import Export
 
+import traceback
+
 
 class StudyTracker:
 
@@ -115,6 +117,7 @@ class StudyTracker:
 		except Exception as e:
 				print(f"Error when trying to remove course {course_id}")
 
+
 	
 
 	def add_session(self, arg_list: list[str])-> None:
@@ -218,20 +221,28 @@ class StudyTracker:
 				print(f"Error when trying to remove session {session_id}")
 
 	def update_session(self, arg_list: list[str]) -> None:
-		if len(arg_list) < 3:
+		if not arg_list or len(arg_list) < 3:
 			print("Arguments are missing. Use command like: edit session [session_id] [column] [new_content]")
-		else:
-			session_id = arg_list[0]
-			column_name = arg_list[1]
-			new_content = arg_list[3:]
+			return
 
-		if column_name:
-			try:
-				session_to_update = self.db.read_session(session_id)
+		session_id = arg_list[0]
+		column_name = arg_list[1]
+		new_content = " ".join(arg_list[2:])
 
-				updated_session = self.db.update_session(session_to_update, column, new_content)
-			except Exception as e:
-				pass		
+		if column_name not in {"course_id", "date_created", "subject", "status", "hours"}:
+			print(f"{column_name} does not exist in table. Enter valid column name: 'course_id', 'date_created', 'subject', 'status','hours'")
+			return
+
+		try:
+			session_to_update = self.db.read_session(session_id)
+			updated_session = self.db.update_session(session_to_update, column_name, new_content)
+			if not updated_session:
+				print("did not work")
+			print("Session updated")
+		except Exception as e:
+			print(f"Error when trying to update session: {e}")
+			print(self.db.read_all_sessions())
+			traceback.print_exc()
 
 	"""Export methods"""
 

@@ -40,7 +40,6 @@ class DatabaseManager:
 			    );
 			""")
 
-
 			self.con.commit()
 
 		except sqlite3.Error as e:
@@ -142,9 +141,11 @@ class DatabaseManager:
 		return df
 
 	def update_session(self, session: pd.DataFrame, column_name: str, new_content: str) -> bool:
-
-		self.cursor.execute("UPDATE Session SET name=? WHERE id=?", (new_content, session_id))
+		session_id = session.loc[0,"id"]
+		query = f"UPDATE Sessions SET {column_name}=? WHERE id=?"
+		self.cursor.execute(query,(new_content, session_id))
 		self.con.commit()
+		print(self.read_session(session_id)) #RETURNING NONE, to fIX!!!
 		if self.cursor.rowcount > 0:
 			return True
 		else:
