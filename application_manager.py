@@ -119,6 +119,13 @@ class StudyTracker:
 		status = arg_list[-2] 
 		hours = float(arg_list[-1])
 
+		print(f"Course ID: {course_id}")
+		print(f"Date: {date}")
+		print(type(date)) # str
+		print(f"Subject: {subject}")
+		print(f"Status: {status}")
+		print(f"Hours: {hours}")
+
 		if course_df is None:
 			print(f"Course id {course_id} does not exist. Enter a valid course id")
 			return
@@ -139,11 +146,14 @@ class StudyTracker:
 			print(f"{hours} is an invalid type. Enter hours as a number")
 			return
 
+		print(f"About to create session with date: {date}")
+
 		try:
 			added_session = self.db.create_session(course_id, date, subject, status, hours)
 			if added_session is None:
 				return
 			print(f"{added_session} added for the course {course_id}")
+
 		except Exception as e:
 			print(f"Error when trying to create session: {e}")
 
@@ -160,7 +170,14 @@ class StudyTracker:
 	
 	def view_session(self, arg_list: list[str]) -> None:
 		if not arg_list:
-			pass
+			list_sessions = self.db.read_all_sessions()
+			if list_sessions is None:
+				print(f"table is empty. Add sessions to fill the table")
+				return
+			print(list_sessions)	
+			return
+
+
 
 		session_id = arg_list[0]
 		try:

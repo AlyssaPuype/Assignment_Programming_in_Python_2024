@@ -136,7 +136,11 @@ class DatabaseManager:
 		"""
 		reads all sessions from Session table
 		"""
-		pass
+		query = "SELECT * FROM Sessions"
+		df = pd.read_sql_query(query, self.con)
+		if df.empty:
+			return None
+		return df
 
 	"""close the connection"""
 	def close(self) -> None:

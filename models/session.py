@@ -11,4 +11,4 @@ class Session:
 		self.hours = hours
 
 	def __str__(self) -> str:
-		return f"Id: {self.id} | Course_id: {self.course_id} | Date: {date} | Subject: {subject} | Status: {status}"
+		return f"Id: {self.id} | Course_id: {self.course_id} | Date: {self.date} | Subject: {self.subject} | Status: {self.status} | Hours: {self.hours}"
