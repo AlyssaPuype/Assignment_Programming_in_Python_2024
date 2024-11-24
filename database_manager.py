@@ -142,6 +142,22 @@ class DatabaseManager:
 			return None
 		return df
 
+	def delete_session(self, session_id: int) -> bool:
+		self.cursor.execute("DELETE FROM Sessions WHERE id=?", (session_id,))
+		self.con.commit()
+		if self.cursor.rowcount > 0:
+			return True
+		else:
+			return False
+
+	def delete_all_sessions(self) -> bool:
+		self.cursor.execute("DELETE FROM Sessions")
+		self.con.commit()
+		if self.cursor.rowcount > 0:
+			return True
+		else:
+			return False
+
 	"""close the connection"""
 	def close(self) -> None:
 		try:

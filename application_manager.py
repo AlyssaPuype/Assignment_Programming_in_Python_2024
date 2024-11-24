@@ -93,7 +93,7 @@ class StudyTracker:
 					confirmation = input("Are you sure you want to clear the Courses table? Confirm with 'Y'/'N': ")
 					if confirmation.lower() == "y":
 						if self.db.delete_all_courses():
-							print("Course table cleared.")
+							print("Table table cleared.")
 							return False
 						else:
 							print("Table is already empty.")
@@ -105,6 +105,16 @@ class StudyTracker:
 					print("Unknown command. Use command like: remove course all")
 			except Exception as e:
 				print("Error when trying to clear table")
+
+		course_id = arg_list[0]
+		try:
+			removed_course = self.db.delete_course(course_id)
+			if not removed_course:
+				return
+			print(f"Course {course_id} is removed from table")
+		except Exception as e:
+				print(f"Error when trying to remove course {course_id}")
+
 	
 
 	def add_session(self, arg_list: list[str])-> None:
@@ -177,8 +187,6 @@ class StudyTracker:
 			print(list_sessions)	
 			return
 
-
-
 		session_id = arg_list[0]
 		try:
 			viewed_session = self.db.read_session(session_id)
@@ -188,6 +196,35 @@ class StudyTracker:
 			print(f"{viewed_session}")
 		except Exception as e:
 			print(f"Error when trying to view session {session_id}: {e}")
+
+	def remove_session(self, arg_list: list[str]) -> None:
+		if not arg_list:
+			try:
+				while True:
+					confirmation = input("Are you sure you want to clear the Session table? Confirm with 'Y'/'N': ")
+					if confirmation.lower() == "y":
+						if self.db.delete_all_sessions():
+							print("Table cleared.")
+							return False
+						else:
+							print("Table is already empty.")
+					elif confirmation.lower() == "n":
+						return False
+					else:
+						print("invalid answer. Type 'Y' to clear table or 'N' to cancel")
+				else: 
+					print("Unknown command. Use command like: remove course all")
+			except Exception as e:
+				print("Error when trying to clear table")
+
+		session_id = arg_list[0]
+		try:
+			removed_session = self.db.delete_session(session_id)
+			if not removed_session:
+				return
+			print(f"Session {session_id} is removed from table")
+		except Exception as e:
+				print(f"Error when trying to remove session {session_id}")
 
 
 	"""Export methods"""
@@ -220,15 +257,6 @@ class StudyTracker:
 
 	def export_session(self, arg_list: list[str]):
 		pass
-
-		course_id = arg_list[0]
-		try:
-			removed_course = self.db.delete_course(course_id)
-			if not removed_course:
-				return
-			print(f"Course {course_id} is removed from table")
-		except Exception as e:
-				print(f"Error when trying to remove course {course_id}")
 		
 
 
