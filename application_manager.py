@@ -149,8 +149,6 @@ class StudyTracker:
 			print(f"{hours} is an invalid type. Enter hours as a number")
 			return
 
-		print(f"About to create session with date: {date}")
-
 		try:
 			added_session = self.db.create_session(course_id, date, subject, status, hours)
 			if added_session is None:
@@ -219,6 +217,21 @@ class StudyTracker:
 		except Exception as e:
 				print(f"Error when trying to remove session {session_id}")
 
+	def update_session(self, arg_list: list[str]) -> None:
+		if len(arg_list) < 3:
+			print("Arguments are missing. Use command like: edit session [session_id] [column] [new_content]")
+		else:
+			session_id = arg_list[0]
+			column_name = arg_list[1]
+			new_content = arg_list[3:]
+
+		if column_name not in {""}
+			try:
+				session_to_update = self.db.read_session(session_id)
+
+				updated_session = self.db.update_session(session_to_update, column, new_content)
+			except Exception as e:
+				pass		
 
 	"""Export methods"""
 
@@ -266,17 +279,7 @@ class StudyTracker:
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
 
-	def update_session(self, arg_list: list[str]) -> None:
-		if len(arg_list) < 2:
-			print("Arguments are missing. Use command like: edit course [session_id] [column] [new_content]")
-		else:
-			session_id = arg_list[0]
-			column_name = arg_list[1]
-			new content = arg_list [3:]
-			try:
-				pass
-			except Exception as e:
-				pass
+	
 		
 
 	"""session related methods:
