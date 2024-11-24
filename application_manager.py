@@ -38,7 +38,7 @@ class StudyTracker:
 		if not arg_list:
 			print(f"Course name is missing. Use command like: add course [course_name]")
 			return
-		course_name = " ".join(arg_list[0:]).lower()
+		course_name = " ".join(arg_list[0:])
 		try:
 			added_course = self.db.create_course(course_name)
 			if added_course is None:
