@@ -238,7 +238,6 @@ class StudyTracker:
 			updated_session = self.db.update_session(session_to_update, column_name, new_content)
 			if not updated_session:
 				print("did not work")
-			print("Session updated")
 		except Exception as e:
 			print(f"Error when trying to update session: {e}")
 			print(self.db.read_all_sessions())

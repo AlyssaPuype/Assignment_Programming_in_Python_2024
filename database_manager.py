@@ -114,7 +114,7 @@ class DatabaseManager:
 		else:
 			return None
 
-	def read_session(self, session_id) -> pd.DataFrame:
+	def read_session(self, session_id: int) -> pd.DataFrame:
 		"""
 		reads a single session
 		"""
@@ -141,11 +141,13 @@ class DatabaseManager:
 		return df
 
 	def update_session(self, session: pd.DataFrame, column_name: str, new_content: str) -> bool:
-		session_id = session.loc[0,"id"]
+		session_id = int(session.loc[0,"id"])
+		print(type(session_id))
+		print(f"session: {self.read_session(session_id)}")
 		query = f"UPDATE Sessions SET {column_name}=? WHERE id=?"
 		self.cursor.execute(query,(new_content, session_id))
 		self.con.commit()
-		print(self.read_session(session_id)) #RETURNING NONE, to fIX!!!
+		print(f"session: {self.read_session(session_id)}") #RETURNING NONE, to fIX!!!
 		if self.cursor.rowcount > 0:
 			return True
 		else:
