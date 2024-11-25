@@ -144,6 +144,12 @@ class DatabaseManager:
 			return None
 		return df
 
+	def read_all_session_today(self) -> pd.DataFrame:
+		pass
+
+	def read_all_sessions_for_date(self, date_give: str) -> pd.DataFrame:
+		pass
+
 	def update_session(self, session: pd.DataFrame, column_name: str, new_content: str) -> bool:
 		session_id = int(session.loc[0,"id"])
 		query = f"UPDATE Sessions SET {column_name}=? WHERE id=?"
