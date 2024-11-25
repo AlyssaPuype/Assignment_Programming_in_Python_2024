@@ -118,17 +118,21 @@ class DatabaseManager:
 		"""
 		reads a single session
 		"""
-		query = "SELECT id, course_id, date_created, subject, status, hours FROM Sessions WHERE id=?"
+		query = "SELECT * FROM Sessions WHERE id=?"
 		df = pd.read_sql_query(query, self.con, params=(session_id,))
 		if df.empty:
 			return None
 		return df
 
-	def read_all_sessions_for_course(self, course_id) -> pd.DataFrame:
+	def read_all_sessions_for_course(self, course_id: int) -> pd.DataFrame:
 		"""
 		reads all sessions, linked to the given course_id
 		"""
-		pass
+		query = "SELECT * FROM Sessions WHERE course_id=?"
+		df = pd.read_sql_query(query, self.con, params=(course_id,))
+		if df.empty:
+			return None
+		return df
 
 	def read_all_sessions(self) -> pd.DataFrame:
 		"""

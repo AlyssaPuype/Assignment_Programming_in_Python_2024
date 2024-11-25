@@ -4,6 +4,8 @@ from datetime import datetime
 from database_manager import DatabaseManager
 from exporter import Export
 
+import traceback
+
 class StudyTracker:
 
 	def __init__(self, db: DatabaseManager) -> None:
@@ -31,10 +33,11 @@ class StudyTracker:
 	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
 	Sessions:
-	- 'add session [course_id] [date], [subject], [status], [hours]]'
+	- 'add session [course id] [date], [subject], [status], [hours]]'
 	- 'remove session [session id]'
 	- 'view session [session id]'
-	- 'edit session [session_id] [column] [new content]'
+	- 'view session for [course id]' - Prints all existing sessions for given course id
+	- 'edit session [session id] [column] [new content]'
 	- 'export session [csv]/[excel]'
 		""")
 
@@ -225,6 +228,7 @@ class StudyTracker:
 			 return date_object.strftime("%d-%m-%Y")
 		except ValueError:
 			return None
+
 	
 	def view_session(self, arg_list: list[str]) -> None:
 		if not arg_list:
@@ -232,18 +236,44 @@ class StudyTracker:
 			if list_sessions is None:
 				print(f"table is empty. Add sessions to fill the table")
 				return
-			print(list_sessions)	
+			print(list_sessions)    
 			return
 
-		session_id = arg_list[0]
-		try:
-			viewed_session = self.db.read_session(session_id)
-			if viewed_session is None:
-				print(f"Session with ID {session_id} does not exist")
+		if len(arg_list) > 2:
+			print("Too many arguments. Use command like: view session , view session [session id] or view session for [course id]")
+			return
+
+		if len(arg_list) == 2:
+
+			action_name = arg_list[0]
+			course_id = arg_list[1]
+			if action_name != "for":
+				print("Unknown command. Use command like: view session for [course id]")
 				return
-			print(f"{viewed_session}")
-		except Exception as e:
-			print(f"Error when trying to view session {session_id}: {e}")
+
+			try:
+				viewed_session = self.db.read_all_sessions_for_course(course_id)
+				if viewed_session is None:
+					print(f"No sessions found for course {course_id}. Enter a valid course id")
+					return
+				print(f"{viewed_session}")
+			except Exception as e:
+				print(f"Error when trying to view sessions for course {course_id}: {e}")
+				return
+
+		if len(arg_list) == 1:
+
+			session_id = arg_list[0]
+			try:
+				viewed_session = self.db.read_session(session_id)
+				if viewed_session is None:
+					print(f"Session {session_id} does not exist")
+					return
+				print(f"{viewed_session}")
+			except Exception as e:
+				print(f"Error when trying to view session {session_id}: {e}")
+				return
+
 
 	def remove_session(self, arg_list: list[str]) -> None:
 		if not arg_list:
@@ -264,6 +294,7 @@ class StudyTracker:
 					print("Unknown command. Use command like: remove course all")
 			except Exception as e:
 				print("Error when trying to clear table")
+				return
 
 		session_id = arg_list[0]
 		try:
@@ -274,6 +305,7 @@ class StudyTracker:
 		except Exception as e:
 				print(f"Error when trying to remove session {session_id}")
 				return
+
 
 	def update_session(self, arg_list: list[str]) -> None:
 		if not arg_list or len(arg_list) < 3:
@@ -335,6 +367,7 @@ class StudyTracker:
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
 			return
+
 
 	def export_session(self, arg_list: list[str])-> None:
 		exporter = Export(self.db)
