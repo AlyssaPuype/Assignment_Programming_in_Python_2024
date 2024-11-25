@@ -4,17 +4,23 @@ from datetime import datetime
 from database_manager import DatabaseManager
 from exporter import Export
 
-import traceback
-
-
 class StudyTracker:
 
 	def __init__(self, db: DatabaseManager) -> None:
 		self.db = db
 
-	"""Application-related methods."""
+	def show_welcome_message(self) -> None:
+		"""
+		Shows a welcome message
+		"""
+		print("\nWelcome to study tracker!")
+		print("To see the list of commands, type 'help'")
+		print("To exit the application, type 'exit'\n")
 
 	def show_commands(self) -> None:
+		"""
+		Shows a list of available commands that the user can use
+		"""
 		print("List of commands:")
 		print("""
 	Courses:
@@ -25,16 +31,25 @@ class StudyTracker:
 	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
 	Sessions:
-	- 'add session [course_id, date, subject, status, hours]'
+	- 'add session [course_id] [date], [subject], [status], [hours]]'
 	- 'remove session [session id]'
 	- 'view session [session id]'
-	- 'edit session [column, new content]'
+	- 'edit session [session_id] [column] [new content]'
+	- 'export session [csv]/[excel]'
 		""")
 
 
-	"""course related methods:"""
+	"""COURSE RELATED METHODS:"""
 
 	def add_course(self, arg_list: list[str]) -> None:
+		"""
+		Adds a course to the table
+		Arguments: list of strings
+
+		In case of no arguments: prints out an error message to the user, asking for correct command format
+		In case of one or more aguments: course name is made from the list of strings and given to the db_manager function
+		"""
+
 		if not arg_list:
 			print(f"Course name is missing. Use command like: add course [course_name]")
 			return
@@ -47,10 +62,19 @@ class StudyTracker:
 		except Exception as e:
 			print(f"Error when trying to add {course_name}. Course probably already exists.\n")
 			print(self.db.read_all_courses())
+			return
+
 
 	def view_course(self, arg_list: list[str]) -> None:
+		"""
+		Prints a course from the table
+		Arguments: list of strings
 
-		"""if no parameter is given, show all current courses"""
+		In case of no arguments: Prints all courses in table
+		In case of one argument: course_id is needed as argument and given to the db_manager function
+		In case of more than one argument: prints out an error message to the user, asking for correct command format
+		"""
+
 		if not arg_list:
 			list_courses = self.db.read_all_courses()
 			if list_courses is None: 
@@ -59,7 +83,10 @@ class StudyTracker:
 			print(list_courses)
 			return
 
-		"""if course_id is given as parameter, show the course info"""
+		if len(arg_list) > 1:
+			print("Too many arguments. Use command like: view course [course_id]")
+			return
+
 		course_id = arg_list[0]
 		try:
 			viewed_course = self.db.read_course(course_id)
@@ -69,10 +96,18 @@ class StudyTracker:
 			print(f"{viewed_course}")
 		except Exception as e:
 			print(f"Error when trying to view course {course_id}: {e}")
+			return
 
 
-	"""updates name of the course"""
 	def update_course(self, arg_list: list[str]) -> None:
+		"""
+		Updates the course name of a course to a new given name
+		Arguments: list of strings
+
+		In case of less than 2 arguments: Prints out an error message to the user, asking for correct command format
+		In case of 2 arguments: First argument is course_id. Second argument is the new name of the course. Given to the db_manager function
+		"""
+
 		if len(arg_list) < 2:
 			print("Arguments are missing. Use command like: edit course [course_id] [course_new_name]")
 		else:
@@ -81,14 +116,23 @@ class StudyTracker:
 			try:
 				updated_course = self.db.update_course(course_id, course_new_name)
 				if not updated_course:
+					print(f"Course {course_id} does not exist. Enter a valid course id")
 					return
-				print(f"Course editing to '{course_new_name}'\n")
+				print(f"Course edited to '{course_new_name}'\n")
 				print(self.db.read_course(course_id))
 			except Exception as e:
 				print(f"Error when editing course {course_id} to '{course_new_name}'. Course probably already exists. \n")
 				return
 
+
 	def remove_course(self, arg_list: list[str]) -> None:
+		"""
+		Removes the course with given course id from table,
+		Arguments: list of strings
+
+		In case of no arguments: Prompts the user if they want to clear the table. If 'Yes' -> clear table. If 'No', do nothing.
+		In case of 2 arguments: First argument is course_id. Second argument is the new name of the course. Given to the db_manager function
+		"""
 		if not arg_list:
 			try:
 				while True:
@@ -108,17 +152,24 @@ class StudyTracker:
 			except Exception as e:
 				print("Error when trying to clear table")
 
+		if len(arg_list) > 1:
+			print("Too many arguments. Use command like: remove course  or remove course [course_id]")
+			return
+
 		course_id = arg_list[0]
 		try:
 			removed_course = self.db.delete_course(course_id)
 			if not removed_course:
+				print(f"Course {course_id} does not exist. Enter a valid course id")
 				return
 			print(f"Course {course_id} is removed from table")
 		except Exception as e:
 				print(f"Error when trying to remove course {course_id}")
-
+				return
 
 	
+
+	"""SESSION RELATED MEHODS:"""
 
 	def add_session(self, arg_list: list[str])-> None:
 		if not arg_list or len(arg_list) < 5:
@@ -133,7 +184,7 @@ class StudyTracker:
 		hours = float(arg_list[-1])
 
 		if course_df is None:
-			print(f"Course id {course_id} does not exist. Enter a valid course id")
+			print(f"Course {course_id} does not exist. Enter a valid course id")
 			return
 
 		if self.get_date(date) is None:
@@ -155,11 +206,14 @@ class StudyTracker:
 		try:
 			added_session = self.db.create_session(course_id, date, subject, status, hours)
 			if added_session is None:
+				print(f"No sessions created. Check command")
 				return
 			print(f"{added_session} added for the course {course_id}")
 
 		except Exception as e:
 			print(f"Error when trying to create session: {e}")
+			print(self.db.read_all_sessions())
+			return
 
 
 	def get_date(self, date: str) -> str:
@@ -215,10 +269,11 @@ class StudyTracker:
 		try:
 			removed_session = self.db.delete_session(session_id)
 			if not removed_session:
-				return
+				print(f"Session {session_id} does not exist. Enter a valid session id")
 			print(f"Session {session_id} is removed from table")
 		except Exception as e:
 				print(f"Error when trying to remove session {session_id}")
+				return
 
 	def update_session(self, arg_list: list[str]) -> None:
 		if not arg_list or len(arg_list) < 3:
@@ -247,14 +302,16 @@ class StudyTracker:
 			session_to_update = self.db.read_session(session_id)
 			updated_session = self.db.update_session(session_to_update, column_name, new_content)
 			if not updated_session:
-				return
+				print(f"Session {session_id} does not exist. Enter a valid session id")
 			print(f"Column '{column_name}'' in Session {session_id} updated to '{new_content}'\n")
 			print(self.db.read_session(session_id))
 		except Exception as e:
 			print(f"Error when trying to update session: {e}")
 			return
 
-	"""Export methods"""
+
+
+	"""EXPORT METHODS"""
 
 	def export_course(self, arg_list: list[str])-> None:
 		exporter = Export(self.db)
@@ -277,6 +334,7 @@ class StudyTracker:
 			print(f"Table Courses exported to {export_type} file as '{export_name}'")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
+			return
 
 	def export_session(self, arg_list: list[str])-> None:
 		exporter = Export(self.db)
@@ -299,20 +357,5 @@ class StudyTracker:
 			print(f"Table Sessions exported to {export_type} file as '{export_name}'")
 		except Exception as e:
 			print(f"Error when exporting data: {e}")
-
-	
-		
-
-	"""session related methods:
-
-	def updateCourse():
-
-	def addSession():
-
-	def removeSession():
-
-	def getSession():
-
-	def updateSession():
-	"""
+			return
 

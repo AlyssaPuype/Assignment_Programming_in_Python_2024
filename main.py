@@ -6,9 +6,7 @@ from database_manager import DatabaseManager
 database = DatabaseManager()
 tracker = StudyTracker(database)
 
-
-print("Welcome to study tracker!")
-print("To see the list of commands, type 'help'")
+tracker.show_welcome_message()
 
 while True:
 	command = input("Enter your command: ")
