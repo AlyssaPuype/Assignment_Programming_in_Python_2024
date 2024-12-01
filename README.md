@@ -32,4 +32,21 @@ Sessions:
 - `view session`: 
 - `export session [csv]/[excel] [file name]`: Exports all data to CSV or Excel file with given file name. All arguments required.
 
+## Files explained:
+
+**database_manager.py**: Module containing code that interacts with the database.
+Imported modules: 
+`import sqlite3
+import pandas as pd
+from models.course import Course
+from models.session import Session`
+**application_manager.py**: Module containing code that interacts with `database_manager`.
+Imported modules: 
+**main.py**: 
+**models**
+  **course.py**:
+  **session.py**: 
+**exporter.py**: 
+**requirements.txt**:
+**configuration.py**:
 
