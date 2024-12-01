@@ -41,8 +41,10 @@ Imported by `application_manager` and `main.py`.
 Imported modules: `datetime`, `database_manager`, `exporter`.
 Imported by `main.py`.
 - **main.py**: Executable file containing code that interacts with `application_manager` and user.
-- **models/course.py**: 
-- **models/session.py**: 
+- **models/course.py**: Module defining course object.
+Imported by `database_manager`.
+- **models/session.py**: Module defning session object.
+Imported by `database_manager`.
 - **exporter.py**: Module containing functions to export database to csv or excel.
 Imported by `application_manager`.
 - **requirements.txt**: File containing all the required packages.
