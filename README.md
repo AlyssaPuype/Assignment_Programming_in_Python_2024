@@ -35,18 +35,17 @@ Sessions:
 ## Files explained:
 
 **database_manager.py**: Module containing code that interacts with the database.
-Imported modules: 
-`import sqlite3
-import pandas as pd
-from models.course import Course
-from models.session import Session`
+Imported modules: `sqlite3`, `pandas` and from models: `course.py`, `session.py`.
+Imported by `application_manager` and `main.py`
 **application_manager.py**: Module containing code that interacts with `database_manager`.
-Imported modules: 
-**main.py**: 
+Imported modules: `datetime`, `database_manager`, `exporter`
+Imported by `main.py`
+**main.py**: Executable file containing code that interacts with `application_manager` and user.
 **models**
-  **course.py**:
+  **course.py**: 
   **session.py**: 
-**exporter.py**: 
-**requirements.txt**:
-**configuration.py**:
+**exporter.py**: Module containing functions to export database to csv or excel
+Imported by `application_manager`
+**requirements.txt**: File containing all the required packages
+**configuration.py**: Module containing constants,...
 
