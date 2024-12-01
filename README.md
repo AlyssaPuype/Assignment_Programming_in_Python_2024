@@ -44,7 +44,7 @@ Imported by `main.py`.
 - **models/course.py**: Module defining course object.
 Imported by `database_manager`.
 - **models/session.py**: Module defning session object.
-Imported by `database_manager`.
+Imported by `database_manager`
 - **exporter.py**: Module containing functions to export database to csv or excel.
 Imported by `application_manager`.
 - **requirements.txt**: File containing all the required packages.
