@@ -34,18 +34,18 @@ Sessions:
 
 ## Files explained:
 
-**database_manager.py**: Module containing code that interacts with the database.
-Imported modules: `sqlite3`, `pandas` and from models: `course.py`, `session.py`.
-Imported by `application_manager` and `main.py`
-**application_manager.py**: Module containing code that interacts with `database_manager`.
-Imported modules: `datetime`, `database_manager`, `exporter`
-Imported by `main.py`
-**main.py**: Executable file containing code that interacts with `application_manager` and user.
-**models**
-  **course.py**: 
-  **session.py**: 
-**exporter.py**: Module containing functions to export database to csv or excel
-Imported by `application_manager`
-**requirements.txt**: File containing all the required packages
-**configuration.py**: Module containing constants,...
+- **database_manager.py**: Module containing code that interacts with the database.
+&nbsp;Imported modules: `sqlite3`, `pandas` and from models: `course.py`, `session.py`.
+&nbsp;Imported by `application_manager` and `main.py`
+- **application_manager.py**: Module containing code that interacts with `database_manager`.
+&nbsp;Imported modules: `datetime`, `database_manager`, `exporter`
+&nbsp;Imported by `main.py`
+- **main.py**: Executable file containing code that interacts with `application_manager` and user.
+- **models**
+&nbsp;&nbsp;**course.py**: 
+&nbsp;&nbsp;**session.py**: 
+- **exporter.py**: Module containing functions to export database to csv or excel
+&nbsp;Imported by `application_manager`
+- **requirements.txt**: File containing all the required packages
+- **configuration.py**: Module containing constants,...
 
