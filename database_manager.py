@@ -145,10 +145,12 @@ class DatabaseManager:
 		return df
 
 	def read_all_session_today(self) -> pd.DataFrame:
-		pass
+		query = "SELECT * FROM Sessions WHERE strftime('%d-%m-%Y', DATE('now'))"
+		df = pd.read_sql_query(query, self.con)
+		if df.empty:
+			return None
+		return df
 
-	def read_all_sessions_for_date(self, date_give: str) -> pd.DataFrame:
-		pass
 
 	def read_all_session_for_status(self, status: str) -> pd.DataFrame:
 		pass

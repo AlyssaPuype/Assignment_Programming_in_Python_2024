@@ -96,7 +96,7 @@ class StudyTracker:
 			if viewed_course is None:
 				print(f"Course with ID {course_id} does not exist")
 				return
-			print(f"{viewed_course}")
+			print(viewed_course)
 		except Exception as e:
 			print(f"Error when trying to view course {course_id}: {e}")
 			return
@@ -244,7 +244,6 @@ class StudyTracker:
 			return
 
 		if len(arg_list) == 2:
-
 			action_name = arg_list[0]
 			course_id = arg_list[1]
 			if action_name != "for":
@@ -256,23 +255,33 @@ class StudyTracker:
 				if viewed_session is None:
 					print(f"No sessions found for course {course_id}. Enter a valid course id")
 					return
-				print(f"{viewed_session}")
+				print(viewed_session)
 			except Exception as e:
 				print(f"Error when trying to view sessions for course {course_id}: {e}")
 				return
 
-		if len(arg_list) == 1:
-
-			session_id = arg_list[0]
+		action_name = arg_list[0]
+		if action_name == "today":
 			try:
-				viewed_session = self.db.read_session(session_id)
+				viewed_session = self.db.read_all_session_today()
 				if viewed_session is None:
-					print(f"Session {session_id} does not exist")
+					print("No sessions found for today.")
 					return
-				print(f"{viewed_session}")
+				print(viewed_session)
 			except Exception as e:
-				print(f"Error when trying to view session {session_id}: {e}")
+				print(f"Error when trying to view sessions for today: {e}.")
 				return
+
+		try:
+			session_id = arg_list[0]
+			viewed_session = self.db.read_session(session_id)
+			if viewed_session is None:
+				print(f"Session {session_id} does not exist")
+				return
+			print(viewed_session)
+		except Exception as e:
+			print(f"Error when trying to view session {session_id}: {e}")
+			return
 
 
 	def remove_session(self, arg_list: list[str]) -> None:
