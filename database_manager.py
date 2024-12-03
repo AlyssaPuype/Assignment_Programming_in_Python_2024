@@ -145,7 +145,7 @@ class DatabaseManager:
 		return df
 
 	def read_all_session_today(self) -> pd.DataFrame:
-		query = "SELECT * FROM Sessions WHERE strftime('%d-%m-%Y', DATE('now'))"
+		query = "SELECT * FROM Sessions WHERE date_created = strftime('%d-%m-%Y', DATE('now'))"
 		df = pd.read_sql_query(query, self.con)
 		if df.empty:
 			return None

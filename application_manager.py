@@ -36,6 +36,7 @@ class StudyTracker:
 	- 'add session [course id] [date], [subject], [status], [hours]]'
 	- 'remove session [session id]'
 	- 'view session [session id]'
+	- 'view session today' - Prints all sessions for today
 	- 'view session for [course id]' - Prints all existing sessions for given course id
 	- 'edit session [session id] [column] [new content]'
 	- 'export session [csv]/[excel]'
@@ -260,8 +261,8 @@ class StudyTracker:
 				print(f"Error when trying to view sessions for course {course_id}: {e}")
 				return
 
-		action_name = arg_list[0]
-		if action_name == "today":
+		first_arg = arg_list[0]
+		if first_arg == "today":
 			try:
 				viewed_session = self.db.read_all_session_today()
 				if viewed_session is None:
@@ -271,19 +272,19 @@ class StudyTracker:
 			except Exception as e:
 				print(f"Error when trying to view sessions for today: {e}.")
 				return
-
-		try:
-			session_id = arg_list[0]
-			viewed_session = self.db.read_session(session_id)
-			if viewed_session is None:
-				print(f"Session {session_id} does not exist")
+		else:
+			try:
+				session_id = first_arg
+				viewed_session = self.db.read_session(session_id)
+				if viewed_session is None:
+					print(f"Session {session_id} does not exist")
+					return
+				print(viewed_session)
+			except Exception as e:
+				print(f"Error when trying to view session {session_id}: {e}")
 				return
-			print(viewed_session)
-		except Exception as e:
-			print(f"Error when trying to view session {session_id}: {e}")
-			return
 
-
+		
 	def remove_session(self, arg_list: list[str]) -> None:
 		if not arg_list:
 			try:
