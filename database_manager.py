@@ -153,7 +153,11 @@ class DatabaseManager:
 
 
 	def read_all_session_for_status(self, status: str) -> pd.DataFrame:
-		pass
+		query = f"SELECT * FROM Sessions WHERE status=?"
+		df = pd.read_sql_query(query, self.con, params=(status,))
+		if df.empty:
+			return None
+		return df
 
 	def update_session(self, session: pd.DataFrame, column_name: str, new_content: str) -> bool:
 		session_id = int(session.loc[0,"id"])

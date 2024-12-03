@@ -272,6 +272,16 @@ class StudyTracker:
 			except Exception as e:
 				print(f"Error when trying to view sessions for today: {e}.")
 				return
+		elif first_arg.lower() in {'td','ip','d'}:
+			try:
+				viewed_session =  self.db.read_all_session_for_status(first_arg)
+				if viewed_session is None:
+					print("Unknown status. Use status 'td', 'ip' or 'd'")
+					return
+				print(viewed_session)
+			except Exception as e:
+				print(f"Error when trying to view sessions with status {first_arg}: {e}.")
+				return
 		else:
 			try:
 				session_id = first_arg
