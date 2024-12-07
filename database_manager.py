@@ -4,7 +4,6 @@ import pandas as pd
 
 from models.course import Course
 from models.session import Session
-
 """Manage the database for the study tracker application"""
 
 class DatabaseManager:
