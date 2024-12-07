@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 """importing all necessary modules"""
 from app.application_manager import StudyTracker
