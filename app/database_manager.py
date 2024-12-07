@@ -1,21 +1,33 @@
+"""Manage the database for the study tracker application"""
+
 import sqlite3
 import pandas as pd
-
+import os
 
 from app.models.course import Course
 from app.models.session import Session
-"""Manage the database for the study tracker application"""
+from config.configuration import DATABASE_NAME,DATABASE_PATH
 
 class DatabaseManager:
 	
-	def __init__(self, db_name="StudyTracker.db") -> None:
+	def __init__(self, db_name=DATABASE_NAME) -> None:
+
+		db_path = os.path.join(DATABASE_PATH, db_name)
+
+		if not os.path.exists(DATABASE_PATH):
+			db_path = DATABASE_NAME
+			print(f"Invalid path given. Database created in {os.getcwd()}")
+
 		try:
-			self.con = sqlite3.connect(db_name)
+			self.con = sqlite3.connect(db_path)
 			self.cursor = self.con.cursor()
 			self.create_tables()
 		except sqlite3.Error as e:
-			print(f"Error when trying to connect to {db_name} : {e}")
+			print(f"Error when trying to connect to {db_path} : {e}")
 			raise
+
+		db_path = os.path.abspath(db_path)
+		print("Database Path:", db_path)
 
 
 	def create_tables(self) -> None:
