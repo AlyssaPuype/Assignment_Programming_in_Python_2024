@@ -42,6 +42,10 @@ class StudyTracker:
 	- 'view session for [course id]' - Prints all existing sessions for given course id
 	- 'update session [session id] [column] [new content]'
 	- 'export session [csv]/[excel]'
+
+	Database:
+	- 'path db' - shows the path of your database
+	- 'remove db' - deletes the database, prompts for confirmation
 		""")
 
 
@@ -446,9 +450,24 @@ class StudyTracker:
 
 	"""DATABASE RELATED"""
 
-	def remove_database():
-		pass
+	"""prompts the user for confirmation if they want to delete database, if Y given, deletes database"""
+	def remove_database(self)-> str:
+		try:
+			while True:
+				confirmation = input("Are you sure you want to delete the database? Confirm with 'Y'/'N': ")
+				if confirmation.lower() == "y":
+					removed_db_file_name = self.db.remove_db()
+					print(f"{removed_db_file_name} removed")
+					return False
+				elif confirmation.lower() == "n":
+					return False
+				else:
+					print("invalid answer. Type 'Y' to delete the database or 'N' to cancel")
+		except Exception as e:
+			print("Error when trying to delete the database")
+			return
 
-	def show_path_database(self):
+	"""shows the user the path of the database"""
+	def show_path_database(self)-> str:
 		db_path = self.db.show_path()
-		print(f"Database Path: {db_path}")
+		print(f"Database path: {db_path}")

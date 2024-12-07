@@ -53,6 +53,9 @@ class DatabaseManager:
 			print(f"Error when creating tables: {e}")
 			self.con.rollback() 
 
+
+	"""___COURSES___"""
+
 	"""CREATE"""
 	"""adds a course when given a name as parameter"""
 	def create_course(self, name: str) -> Course:	
@@ -62,7 +65,6 @@ class DatabaseManager:
 			return Course(self.cursor.lastrowid, name)
 		else:
 			return None
-
 
 	"""READ"""
 	"""gets info about the course when given a course_id as parameter"""
@@ -82,7 +84,6 @@ class DatabaseManager:
 		if df.empty:
 			return None
 		return df
-
 
 	"""UPDATE"""
 	"""updates the name of a course"""
@@ -112,6 +113,10 @@ class DatabaseManager:
 		else:
 			return False
 
+
+	"""___SESSIONS___"""
+
+	"""CREATE"""
 	def create_session(self, course_id: int, start_date: str, subject: str, status: str, hours: float) -> Session:
 		self.cursor.execute("INSERT INTO Sessions (course_id, start_date, subject, status, hours) VALUES(?,?,?,?,?)", (course_id, start_date, subject, status, hours))
 		self.con.commit()
@@ -120,6 +125,7 @@ class DatabaseManager:
 		else:
 			return None
 
+	"""READ"""
 	def read_session(self, session_id: int) -> pd.DataFrame:
 		"""
 		reads a single session
@@ -130,6 +136,7 @@ class DatabaseManager:
 			return None
 		return df
 
+	"""read all session for a specified course"""
 	def read_all_sessions_for_course(self, course_id: int) -> pd.DataFrame:
 		"""
 		reads all sessions, linked to the given course_id
@@ -140,6 +147,7 @@ class DatabaseManager:
 			return None
 		return df
 
+	"""read all sessions"""
 	def read_all_sessions(self) -> pd.DataFrame:
 		"""
 		reads all sessions from Session table
@@ -150,6 +158,7 @@ class DatabaseManager:
 			return None
 		return df
 
+	"""read all sessions for date today"""
 	def read_all_session_today(self) -> pd.DataFrame:
 		query = "SELECT * FROM Sessions WHERE start_date = strftime('%d-%m-%Y', DATE('now'))"
 		df = pd.read_sql_query(query, self.con)
@@ -157,7 +166,7 @@ class DatabaseManager:
 			return None
 		return df
 
-
+	"""read all sessions for specified status"""
 	def read_all_session_for_status(self, status: str) -> pd.DataFrame:
 		query = f"SELECT * FROM Sessions WHERE status=?"
 		df = pd.read_sql_query(query, self.con, params=(status,))
@@ -165,6 +174,7 @@ class DatabaseManager:
 			return None
 		return df
 
+	"""UPATE"""
 	def update_session(self, session: pd.DataFrame, column_name: str, new_content: str) -> bool:
 		session_id = int(session.loc[0,"id"])
 		query = f"UPDATE Sessions SET {column_name}=? WHERE id=?"
@@ -175,7 +185,7 @@ class DatabaseManager:
 		else:
 			return False
 
-
+	"""DELETE"""
 	def delete_session(self, session_id: int) -> bool:
 		self.cursor.execute("DELETE FROM Sessions WHERE id=?", (session_id,))
 		self.con.commit()
@@ -192,9 +202,22 @@ class DatabaseManager:
 		else:
 			return False
 
-	def show_path(self):		
+
+	"""___DATABASE___"""
+
+	"""show path of the databse"""
+	def show_path(self) -> str:		
 		return os.path.abspath(self.db_path)
 
+	def remove_db(self) -> str:
+		try:
+			os.remove(self.db_path)
+			return DATABASE_NAME
+		except Exception as e:
+			print(f"Error when trying to remove database: {e}")
+
+
+	"""___CLOSE___"""
 	"""close the connection"""
 	def close(self) -> None:
 		try:

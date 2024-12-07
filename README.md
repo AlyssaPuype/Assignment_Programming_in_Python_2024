@@ -32,6 +32,10 @@ Sessions:
 - `view session`: 
 - `export session [csv]/[excel] [file name]`: Exports all data to CSV or Excel file with given file name. All arguments required.
 
+Database:
+- `path db`: shows the path of the database
+- `remove db`: deletes the database, asks for confirmation
+
 ## Files explained:
 
 - **database_manager.py**: Module containing code that interacts with the database.
@@ -48,5 +52,5 @@ Imported by `database_manager`
 - **exporter.py**: Module containing functions to export database to csv or excel.
 Imported by `application_manager`.
 - **requirements.txt**: File containing all the required packages.
-- **configuration.py**: Module containing Database name and path. If path is invalid, current directory will be used as location for the database
+- **configuration.py**: Module containing database name, database path and status values. If path is invalid, current directory will be used as location for the database
 
