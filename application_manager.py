@@ -341,8 +341,8 @@ class StudyTracker:
 		"""
 		check if column_name exists
 		"""
-		if column_name not in {"course_id", "date_created", "subject", "status", "hours"}:
-			print(f"{column_name} does not exist in table. Enter valid column name: 'course_id', 'date_created', 'subject', 'status','hours'")
+		if column_name not in {"course_id", "start_date", "subject", "status", "hours"}:
+			print(f"{column_name} does not exist in table. Enter valid column name: 'course_id', 'start_date', 'subject', 'status','hours'")
 			return
 		
 		"""
@@ -352,10 +352,17 @@ class StudyTracker:
 			print(f"{new_content} is an invalid status. Enter status as 'td' for 'to do', 'ip' for 'in progress' or 'd' for 'done' ")
 			return
 
+		"""
+		check if given course_id exists
+		"""
 		if column_name == "course_id":
-			pass
-
-		if column_name == "date_created":
+			if self.db.read_course(new_content) is None:
+				print(f"Course with {new_content} id does not exists.")
+				return
+		"""
+		check if valid date?
+		"""
+		if column_name == "start_date":
 			pass
 
 		"""

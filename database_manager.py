@@ -32,7 +32,7 @@ class DatabaseManager:
 			    CREATE TABLE IF NOT EXISTS Sessions (
 			        id INTEGER PRIMARY KEY AUTOINCREMENT,
 			        course_id INTEGER NOT NULL,
-			        date_created TEXT NOT NULL,
+			        start_date TEXT NOT NULL,
 			        subject TEXT NOT NULL,
 			        status TEXT CHECK(status IN ('td', 'ip', 'd')),
 			        hours REAL NOT NULL,
@@ -106,11 +106,11 @@ class DatabaseManager:
 		else:
 			return False
 
-	def create_session(self, course_id: int, date_created: str, subject: str, status: str, hours: float) -> Session:
-		self.cursor.execute("INSERT INTO Sessions (course_id, date_created, subject, status, hours) VALUES(?,?,?,?,?)", (course_id, date_created, subject, status, hours))
+	def create_session(self, course_id: int, start_date: str, subject: str, status: str, hours: float) -> Session:
+		self.cursor.execute("INSERT INTO Sessions (course_id, start_date, subject, status, hours) VALUES(?,?,?,?,?)", (course_id, start_date, subject, status, hours))
 		self.con.commit()
 		if self.cursor.rowcount > 0:
-			return Session(self.cursor.lastrowid, course_id, date_created, subject, status, hours)
+			return Session(self.cursor.lastrowid, course_id, start_date, subject, status, hours)
 		else:
 			return None
 
@@ -145,7 +145,7 @@ class DatabaseManager:
 		return df
 
 	def read_all_session_today(self) -> pd.DataFrame:
-		query = "SELECT * FROM Sessions WHERE date_created = strftime('%d-%m-%Y', DATE('now'))"
+		query = "SELECT * FROM Sessions WHERE start_date = strftime('%d-%m-%Y', DATE('now'))"
 		df = pd.read_sql_query(query, self.con)
 		if df.empty:
 			return None

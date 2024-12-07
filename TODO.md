@@ -36,7 +36,7 @@
 		Enter your command: view course
 		4 | Biologie
 		7 | Programming
-- [ ] 'update session [session_id] hours "something" -> allows string meanwhile only numbers are allowed
+- [x] 'update session [session_id] hours "something" -> allows string meanwhile only numbers are allowed
 		Enter your command: update session 6 hours something
 		Column 'hours'' in Session 6 updated to 'something'
 
