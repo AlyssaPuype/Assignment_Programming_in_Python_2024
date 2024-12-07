@@ -2,7 +2,7 @@
 
 import pandas as pd 
 
-from database_manager import DatabaseManager
+from app.database_manager import DatabaseManager
 
 class Export:
 

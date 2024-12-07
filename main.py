@@ -1,7 +1,7 @@
 
 """importing all necessary modules"""
-from application_manager import StudyTracker
-from database_manager import DatabaseManager
+from app.application_manager import StudyTracker
+from app.database_manager import DatabaseManager
 
 database = DatabaseManager()
 tracker = StudyTracker(database)

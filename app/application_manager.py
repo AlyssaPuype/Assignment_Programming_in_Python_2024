@@ -1,8 +1,8 @@
 """ interaction with database manager to add, remove, update, fetch data from the database"""
 
 from datetime import datetime
-from database_manager import DatabaseManager
-from exporter import Export
+from app.database_manager import DatabaseManager
+from app.exporter import Export
 
 import traceback #Helped with finding some errors (traceback.print_exc())
 
