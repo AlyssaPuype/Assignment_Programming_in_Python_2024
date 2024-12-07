@@ -12,7 +12,8 @@ You can also export the tables `Courses` and `Sessions` to a csv or excel file.
 3. Create a virtual environment with `python -m venv myvenv` or `python3 -m venv myvenv`
 4. Activate the virtual environment with `source myvenv/bin/activate` on macOS/Linux or `myvenv\Scripts\activate` on Windows
 5. Install the requirements with `pip install -r requirements.txt` or `pip3 install -r requirements.txt`
-6. Run the file with `python main.py` or `python3 main.py`
+6. Open `config/configuration.py` and adapt DATABASE_NAME and DATABASE_PATH if you like. If the path is invalid, current path will be used.
+7. Run the file with `python main.py` or `python3 main.py`
 
 ## Commands explained:
 
