@@ -1,10 +1,10 @@
-""" interaction with database manager to add, remove, edit, fetch data from the database"""
+""" interaction with database manager to add, remove, update, fetch data from the database"""
 
 from datetime import datetime
 from database_manager import DatabaseManager
 from exporter import Export
 
-import traceback
+import traceback #Helped with finding some errors (traceback.print_exc())
 
 class StudyTracker:
 
@@ -14,6 +14,7 @@ class StudyTracker:
 	def show_welcome_message(self) -> None:
 		"""
 		Shows a welcome message
+		User can type exit to close the application or type 'help' to show a list of commands
 		"""
 		print("\nWelcome to study tracker!")
 		print("To see the list of commands, type 'help'")
@@ -28,7 +29,7 @@ class StudyTracker:
 	Courses:
 	- 'add course [course name]'
 	- 'remove course [course id]' - When no course ID is given, it will prompt you to clear the table
-	- 'edit course [course id] [new course name]' - Changes the name of the course to a new given one
+	- 'update course [course id] [new course name]' - Changes the name of the course to a new given one
 	- 'view course [course id]' - When no course ID is given, it will show all courses'
 	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
@@ -37,8 +38,9 @@ class StudyTracker:
 	- 'remove session [session id]'
 	- 'view session [session id]'
 	- 'view session today' - Prints all sessions for today
+	- 'view session [status]' - Where status can only be 'td', 'ip' or 'd' (todo, in progress, done)
 	- 'view session for [course id]' - Prints all existing sessions for given course id
-	- 'edit session [session id] [column] [new content]'
+	- 'update session [session id] [column] [new content]'
 	- 'export session [csv]/[excel]'
 		""")
 
@@ -113,7 +115,7 @@ class StudyTracker:
 		"""
 
 		if len(arg_list) < 2:
-			print("Arguments are missing. Use command like: edit course [course_id] [course_new_name]")
+			print("Arguments are missing. Use command like: update course [course_id] [course_new_name]")
 		else:
 			course_id = arg_list[0]
 			course_new_name = " ".join(arg_list[1:])
@@ -122,10 +124,10 @@ class StudyTracker:
 				if not updated_course:
 					print(f"Course {course_id} does not exist. Enter a valid course id")
 					return
-				print(f"Course edited to '{course_new_name}'\n")
+				print(f"Course updated to '{course_new_name}'\n")
 				print(self.db.read_course(course_id))
 			except Exception as e:
-				print(f"Error when editing course {course_id} to '{course_new_name}'. Course probably already exists. \n")
+				print(f"Error when updating course {course_id} to '{course_new_name}'. Course probably already exists. \n")
 				return
 
 
@@ -329,17 +331,23 @@ class StudyTracker:
 
 	def update_session(self, arg_list: list[str]) -> None:
 		if not arg_list or len(arg_list) < 3:
-			print("Arguments are missing. Use command like: edit session [session_id] [column] [new_content]")
+			print("Arguments are missing. Use command like: update session [session_id] [column] [new_content]")
 			return
 
 		session_id = arg_list[0]
 		column_name = arg_list[1]
 		new_content = " ".join(arg_list[2:])
 
+		"""
+		check if column_name exists
+		"""
 		if column_name not in {"course_id", "date_created", "subject", "status", "hours"}:
 			print(f"{column_name} does not exist in table. Enter valid column name: 'course_id', 'date_created', 'subject', 'status','hours'")
 			return
 		
+		"""
+		if column 'status' is selected, check if the new content is either 'td', 'ip' or 'd'
+		"""
 		if column_name == "status" and new_content not in {"td", "ip", "d"}:
 			print(f"{new_content} is an invalid status. Enter status as 'td' for 'to do', 'ip' for 'in progress' or 'd' for 'done' ")
 			return
@@ -349,6 +357,14 @@ class StudyTracker:
 
 		if column_name == "date_created":
 			pass
+
+		"""
+		if column 'hours' is selected, check if the new content is a number
+		"""
+		if column_name == "hours":
+			if not self.input_is_number(new_content):
+				print("Use a number for hour.")
+				return
 		
 		try:
 			session_to_update = self.db.read_session(session_id)
@@ -361,7 +377,16 @@ class StudyTracker:
 			print(f"Error when trying to update session: {e}")
 			return
 
-
+	"""
+	function to check if a given input is a number
+	"""
+	def input_is_number(self, input: str) -> bool:
+		try:
+			float(input)
+			return True
+		except ValueError as e:
+			print(f"{input} is not a number.")
+			return False
 
 	"""EXPORT METHODS"""
 

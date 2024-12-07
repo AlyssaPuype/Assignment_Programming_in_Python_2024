@@ -48,5 +48,5 @@ Imported by `database_manager`
 - **exporter.py**: Module containing functions to export database to csv or excel.
 Imported by `application_manager`.
 - **requirements.txt**: File containing all the required packages.
-- **configuration.py**: Module containing constants,...
+- **configuration.py**: Module containing constants,... 
 
