@@ -67,6 +67,13 @@ while True:
 		        	tracker.export_session(command_args)
 		        case _:
 		        	print("Unknown command. Type 'help' to see the list of commands")
+		elif model_name == "db":
+			match action_name:
+				case "remove":
+					tracker.remove_database()
+				case "path":
+					tracker.show_path_database()
+
 		else:
 			print("Unknown command. Type 'help' to see the list of commands")
 

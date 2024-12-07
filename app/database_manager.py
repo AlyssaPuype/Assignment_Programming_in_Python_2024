@@ -9,26 +9,22 @@ from app.models.session import Session
 from config.configuration import DATABASE_NAME,DATABASE_PATH
 
 class DatabaseManager:
-	
+
 	def __init__(self, db_name=DATABASE_NAME) -> None:
 
-		db_path = os.path.join(DATABASE_PATH, db_name)
+		self.db_path = os.path.join(DATABASE_PATH, db_name)
 
 		if not os.path.exists(DATABASE_PATH):
-			db_path = DATABASE_NAME
+			self.db_path = DATABASE_NAME
 			print(f"Invalid path given. Database created in {os.getcwd()}")
 
 		try:
-			self.con = sqlite3.connect(db_path)
+			self.con = sqlite3.connect(self.db_path)
 			self.cursor = self.con.cursor()
 			self.create_tables()
 		except sqlite3.Error as e:
-			print(f"Error when trying to connect to {db_path} : {e}")
+			print(f"Error when trying to connect to {self.db_path} : {e}")
 			raise
-
-		db_path = os.path.abspath(db_path)
-		print("Database Path:", db_path)
-
 
 	def create_tables(self) -> None:
 		try:
@@ -56,7 +52,6 @@ class DatabaseManager:
 		except sqlite3.Error as e:
 			print(f"Error when creating tables: {e}")
 			self.con.rollback() 
-
 
 	"""CREATE"""
 	"""adds a course when given a name as parameter"""
@@ -197,9 +192,15 @@ class DatabaseManager:
 		else:
 			return False
 
+	def show_path(self):		
+		return os.path.abspath(self.db_path)
+
 	"""close the connection"""
 	def close(self) -> None:
 		try:
 			self.con.close()
 		except sqlite3.Error as e:
 			print(f"Error when trying to close the database: {e}")
+
+	
+

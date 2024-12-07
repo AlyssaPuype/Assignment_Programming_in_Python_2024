@@ -1,10 +1,10 @@
 """ interaction with database manager to add, remove, update, fetch data from the database"""
+import traceback #Helped with finding some errors (traceback.print_exc())
+import os
 
 from datetime import datetime
 from app.database_manager import DatabaseManager
 from app.exporter import Export
-
-import traceback #Helped with finding some errors (traceback.print_exc())
 
 class StudyTracker:
 
@@ -444,3 +444,11 @@ class StudyTracker:
 			print(f"Error when exporting data: {e}")
 			return
 
+	"""DATABASE RELATED"""
+
+	def remove_database():
+		pass
+
+	def show_path_database(self):
+		db_path = self.db.show_path()
+		print(f"Database Path: {db_path}")
