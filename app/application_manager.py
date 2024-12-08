@@ -285,7 +285,7 @@ class StudyTracker:
 				return
 
 		"""
-		view all sessions for today
+		views all sessions for today
 		"""
 		first_arg = arg_list[0]
 		if first_arg == "today":
@@ -298,9 +298,6 @@ class StudyTracker:
 			except Exception as e:
 				print(f"Error when trying to view sessions for today: {e}.")
 				return
-		"""
-		view all sessions for specified status
-		"""
 		elif first_arg.lower() in {'td','ip','d'}:
 			try:
 				viewed_session =  self.db.read_all_session_for_status(first_arg)
