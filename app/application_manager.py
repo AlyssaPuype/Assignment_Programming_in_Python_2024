@@ -454,10 +454,11 @@ class StudyTracker:
 	def remove_database(self)-> str:
 		try:
 			while True:
-				confirmation = input("Are you sure you want to delete the database? Confirm with 'Y'/'N': ")
+				confirmation = input("Are you sure you want to delete the database and end the application? Confirm with 'Y'/'N': ")
 				if confirmation.lower() == "y":
 					removed_db_file_name = self.db.remove_db()
 					print(f"{removed_db_file_name} removed")
+					print("Ending application...")
 					return False
 				elif confirmation.lower() == "n":
 					return False

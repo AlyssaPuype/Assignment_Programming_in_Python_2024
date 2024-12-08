@@ -72,6 +72,7 @@ while True:
 			match action_name:
 				case "remove":
 					tracker.remove_database()
+					break
 				case "path":
 					tracker.show_path_database()
 
