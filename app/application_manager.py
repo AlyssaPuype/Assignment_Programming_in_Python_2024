@@ -160,7 +160,7 @@ class StudyTracker:
 					else:
 						print("invalid answer. Type 'Y' to clear table or 'N' to cancel")
 				else: 
-					print("Unknown command. Use command like: remove course all")
+					print("Unknown command. Use command like: remove course")
 			except Exception as e:
 				print("Error when trying to clear table")
 
@@ -170,17 +170,24 @@ class StudyTracker:
 
 		course_id = arg_list[0]
 		try:
-			removed_course = self.db.delete_course(course_id)
-			if not removed_course:
-				print(f"Course {course_id} does not exist. Enter a valid course id")
-				return
-			print(f"Course {course_id} is removed from table")
+			while True:
+					confirmation = input(f"Are you sure you want to remove course {course_id}? All linked sessions will also be deleted.\nConfirm with 'Y'/'N': ")
+					if confirmation.lower() == "y":
+						removed_course = self.db.delete_course(course_id)
+						if not removed_course:
+							print(f"Course {course_id} does not exist. Enter a valid course id")
+							return
+						print(f"Course {course_id} is removed from table")
+						return False
+					elif confirmation.lower() == "n":
+						return False
+					else:
+						print("invalid answer. Type 'Y' to remove course or 'N' to cancel")
 		except Exception as e:
 				print(f"Error when trying to remove course {course_id}")
 				return
 
 	
-
 	"""__SESSION RELATED MEHODS__"""
 
 	def add_session(self, arg_list: list[str])-> None:

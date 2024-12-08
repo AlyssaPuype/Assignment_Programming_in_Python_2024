@@ -18,6 +18,7 @@
 
 ### Extra's I can do
 - ![ ] Add a count courses and count sessions that counts the amount of courses and sessions
+- ![ ] Add extra readability by making it possible to refer to courses and sessions by name instead of id
 
 ### Viewing functionality:
 - [x] Viewing a course with an `id` as a parameter shows: `id`, `name`, (amount of sessions).
@@ -42,6 +43,6 @@
 
 		   id  course_id date_created  subject status      hours
 		0   6          2   03-12-2024  Nothing      d  something
-- [x] CSV extension missing
-- [] when removing course -> all sessions from that course needs to be removed
+- [x] CSV extension missing: adapted exporter.py -> added extension to filename
+- [x] when removing course -> all sessions from that course needs to be removed: used `ON DELETE CASCADE`
 - [x] check `remove db` function on windows (theres an error)

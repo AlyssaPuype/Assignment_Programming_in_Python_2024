@@ -21,6 +21,7 @@ class DatabaseManager:
 		try:
 			self.con = sqlite3.connect(self.db_path)
 			self.cursor = self.con.cursor()
+			self.cursor.execute("PRAGMA foreign_keys = ON") #in sqlite3 the foreign key constraint is not active by default
 			self.create_tables()
 		except sqlite3.Error as e:
 			print(f"Error when trying to connect to {self.db_path} : {e}")
@@ -43,7 +44,7 @@ class DatabaseManager:
 			        subject TEXT NOT NULL,
 			        status TEXT CHECK(status IN ('td', 'ip', 'd')),
 			        hours REAL NOT NULL,
-			        FOREIGN KEY (course_id) REFERENCES Courses(id)
+			        FOREIGN KEY (course_id) REFERENCES Courses(id) ON DELETE CASCADE #manually activate foreign keys to use on delete cascade, see above
 			    );
 			""")
 
