@@ -16,7 +16,7 @@ class DatabaseManager:
 
 		if not os.path.exists(DATABASE_PATH):
 			self.db_path = DATABASE_NAME
-			print(f"Invalid path given. Database created in {os.getcwd()}")
+			print(f"\nInvalid or no path given. Database created in {os.getcwd()}")
 
 		try:
 			self.con = sqlite3.connect(self.db_path)
