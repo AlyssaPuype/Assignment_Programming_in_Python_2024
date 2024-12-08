@@ -10,5 +10,8 @@ class Session:
 		self.status = status
 		self.hours = hours
 
+	def get_id(sef):
+		return self.id
+
 	def __str__(self) -> str:
 		return f"Id: {self.id} | Course_id: {self.course_id} | Date: {self.date} | Subject: {self.subject} | Status: {self.status} | Hours: {self.hours}"

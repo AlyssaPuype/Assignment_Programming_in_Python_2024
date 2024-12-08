@@ -42,3 +42,6 @@
 
 		   id  course_id date_created  subject status      hours
 		0   6          2   03-12-2024  Nothing      d  something
+- [x] CSV extension missing
+- [] when removing course -> all sessions from that course needs to be removed
+- [] check `remove db` function on windows (theres an error)

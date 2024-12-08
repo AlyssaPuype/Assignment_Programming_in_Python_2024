@@ -30,7 +30,7 @@ Sessions:
 - `add session`:
 - `remove session [session id]`: Removes session with given id. When no parameter is given: prompts the user to clear table.
 - `edit session`: 
-- `view session`: 
+- `view session`: Displays session with given id. Use 'help' to see what arguments you can pass. No arguments prins all sessions, ordered by ascending `start_date`
 - `export session [csv]/[excel] [file name]`: Exports all data to CSV or Excel file with given file name. All arguments required.
 
 Database:

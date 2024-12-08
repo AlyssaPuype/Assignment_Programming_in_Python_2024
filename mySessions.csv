@@ -1,0 +1,5 @@
+id,course_id,start_date,subject,status,hours
+1,1,20-02-2024,something,td,1.0
+2,1,20-02-2024,another thing,td,3.0
+4,2,20-02-2024,chapter 1,d,3.0
+3,1,21-02-2024,lastthing,td,1.0

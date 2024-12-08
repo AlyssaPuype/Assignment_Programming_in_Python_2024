@@ -16,7 +16,7 @@ class Export:
 		df = pd.DataFrame(data)
 
 		if file_type == "csv":
-			df.to_csv(name_file, index=False)
+			df.to_csv(f"{name_file}.csv", index=False)
 		elif file_type == "excel":
 			if not name_file.endswith(".xlsx"):
 				name_file += ".xlsx"

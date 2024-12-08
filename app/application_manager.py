@@ -34,7 +34,7 @@ class StudyTracker:
 	- 'remove course [course id]' - When no course ID is given, it will prompt you to clear the table
 	- 'update course [course id] [new course name]' - Changes the name of the course to a new given one
 	- 'view course [course id]' - When no course ID is given, it will show all courses'
-	- 'export course' [csv]/[excel] - exports data of the course table into a cvs or excel
+	- 'export course' [csv]/[excel] [filename] - exports data of the course table into a cvs or excel
 	-------------------------------------------------------------------------------------------
 	Sessions:
 	- 'add session [course id] [date], [subject], [status], [hours]]'
@@ -44,7 +44,7 @@ class StudyTracker:
 	- 'view session [status]' - Where status can only be 'td', 'ip' or 'd' (todo, in progress, done)
 	- 'view session for [course id]' - Prints all existing sessions for given course id
 	- 'update session [session id] [column] [new content]' - specify column where you want to change the data
-	- 'export session [csv]/[excel]'
+	- 'export session [csv]/[excel] [filename]'
 
 	Database:
 	- 'path db' - shows the path of your database

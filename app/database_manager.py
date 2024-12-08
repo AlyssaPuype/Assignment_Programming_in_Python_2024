@@ -152,7 +152,7 @@ class DatabaseManager:
 		"""
 		reads all sessions from Session table
 		"""
-		query = "SELECT * FROM Sessions"
+		query = "SELECT * FROM Sessions ORDER BY start_date ASC"
 		df = pd.read_sql_query(query, self.con)
 		if df.empty:
 			return None
@@ -211,8 +211,12 @@ class DatabaseManager:
 
 	def remove_db(self) -> str:
 		try:
-			os.remove(self.db_path)
-			return DATABASE_NAME
+			self.close()
+			try:
+				os.remove(self.db_path)
+				return DATABASE_NAME
+			except Exception as e:
+				print(f"Can not remove: {e}")
 		except Exception as e:
 			print(f"Error when trying to remove database: {e}")
 
