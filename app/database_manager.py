@@ -44,7 +44,7 @@ class DatabaseManager:
 			        subject TEXT NOT NULL,
 			        status TEXT CHECK(status IN ('td', 'ip', 'd')),
 			        hours REAL NOT NULL,
-			        FOREIGN KEY (course_id) REFERENCES Courses(id) ON DELETE CASCADE #manually activate foreign keys to use on delete cascade, see above
+			        FOREIGN KEY (course_id) REFERENCES Courses(id) ON DELETE CASCADE
 			    );
 			""")
 
