@@ -13,7 +13,7 @@ You can also export the tables `Courses` and `Sessions` to a csv or excel file.
 4. Activate the virtual environment with `source myvenv/bin/activate` on macOS/Linux or `myvenv\Scripts\activate` on Windows
 5. Install the requirements with `pip install -r requirements.txt` or `pip3 install -r requirements.txt`
 6. Open `config/configuration.py` and adapt DATABASE_NAME and DATABASE_PATH if you like. If the path is invalid, current path will be used.
-7. Run the script with `./main.py`
+7. Run the script with `./main.py` or `python3 main.py`
 
 ## Commands explained:
 
@@ -39,13 +39,13 @@ Database:
 
 ## Files explained:
 
-- **database_manager.py**: Module containing code that interacts with the database.
+- **database_manager.py**: Module containing code that interacts with the database itself.
 Imported modules: `sqlite3`, `pandas` and from models: `course.py`, `session.py`.
 Imported by `application_manager` and `main.py`.
 - **application_manager.py**: Module containing code that interacts with `database_manager`.
 Imported modules: `datetime`, `database_manager`, `exporter`.
 Imported by `main.py`.
-- **main.py**: Executable file containing code that interacts with `application_manager` and user.
+- **main.py**: Executable file containing code that interacts with `application_manager` and the user via terminal.
 - **models/course.py**: Module defining course object.
 Imported by `database_manager`.
 - **models/session.py**: Module defning session object.

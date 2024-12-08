@@ -11,6 +11,9 @@ class StudyTracker:
 	def __init__(self, db: DatabaseManager) -> None:
 		self.db = db
 
+
+	"""__WELCOME__"""
+
 	def show_welcome_message(self) -> None:
 		"""
 		Shows a welcome message
@@ -40,16 +43,16 @@ class StudyTracker:
 	- 'view session today' - Prints all sessions for today
 	- 'view session [status]' - Where status can only be 'td', 'ip' or 'd' (todo, in progress, done)
 	- 'view session for [course id]' - Prints all existing sessions for given course id
-	- 'update session [session id] [column] [new content]'
+	- 'update session [session id] [column] [new content]' - specify column where you want to change the data
 	- 'export session [csv]/[excel]'
 
 	Database:
 	- 'path db' - shows the path of your database
-	- 'remove db' - deletes the database, prompts for confirmation
+	- 'remove db' - deletes the database and ends the application, prompts for confirmation
 		""")
 
 
-	"""COURSE RELATED METHODS:"""
+	"""__COURSE RELATED METHODS__"""
 
 	def add_course(self, arg_list: list[str]) -> None:
 		"""
@@ -141,7 +144,6 @@ class StudyTracker:
 		Arguments: list of strings
 
 		In case of no arguments: Prompts the user if they want to clear the table. If 'Yes' -> clear table. If 'No', do nothing.
-		In case of 2 arguments: First argument is course_id. Second argument is the new name of the course. Given to the db_manager function
 		"""
 		if not arg_list:
 			try:
@@ -179,9 +181,17 @@ class StudyTracker:
 
 	
 
-	"""SESSION RELATED MEHODS:"""
+	"""__SESSION RELATED MEHODS__"""
 
 	def add_session(self, arg_list: list[str])-> None:
+
+		"""
+		Adds a session to the table
+		Arguments: list of strings
+
+		In case of no arguments: prints out an error message to the user, asking for correct command format
+		In case of one or more aguments: session is made from the list of strings and given to the db_manager function
+		"""
 		if not arg_list or len(arg_list) < 5:
 			print(f"Arguments are missing. Use command like: add session [course_id] [date] [subject] [status] [hours]")
 			return
@@ -193,22 +203,27 @@ class StudyTracker:
 		status = arg_list[-2] 
 		hours = float(arg_list[-1])
 
+		"""Checks if course exists"""
 		if course_df is None:
 			print(f"Course {course_id} does not exist. Enter a valid course id")
 			return
 
+		"""Checks date format"""
 		if self.get_date(date) is None:
 			print(f" {date} is an invalid date format. Enter date in format dd-mm-yyyy")
 			return
 
+		"""Checks if a subject is given"""
 		if not subject:
 			print("Argument subject is missing . If you mean to specify no subject, you need to use '-' ")
 			return
 
+		"""Checks if the status is either td, ip or d"""
 		if status.lower() not in {"td", "ip", "d"}:
 			print(f" {status} is an invalid status. Enter status as 'td' for 'to do', 'ip' for 'in progress' or 'd' for 'done' ")
 			return
 
+		"""Checks if hours is of type float"""
 		if not isinstance(hours, float):
 			print(f"{hours} is an invalid type. Enter hours as a number")
 			return
@@ -219,12 +234,10 @@ class StudyTracker:
 				print(f"No sessions created. Check command")
 				return
 			print(f"{added_session} added for the course {course_id}")
-
 		except Exception as e:
 			print(f"Error when trying to create session: {e}")
 			print(self.db.read_all_sessions())
 			return
-
 
 	def get_date(self, date: str) -> str:
 		"""
@@ -250,6 +263,10 @@ class StudyTracker:
 			print("Too many arguments. Use command like: view session , view session [session id] or view session for [course id]")
 			return
 
+
+		"""
+		view all sessions for specified course. !TO FIX. 
+		"""
 		if len(arg_list) == 2:
 			action_name = arg_list[0]
 			course_id = arg_list[1]
@@ -267,6 +284,9 @@ class StudyTracker:
 				print(f"Error when trying to view sessions for course {course_id}: {e}")
 				return
 
+		"""
+		view all sessions for today
+		"""
 		first_arg = arg_list[0]
 		if first_arg == "today":
 			try:
@@ -278,6 +298,9 @@ class StudyTracker:
 			except Exception as e:
 				print(f"Error when trying to view sessions for today: {e}.")
 				return
+		"""
+		view all sessions for specified status
+		"""
 		elif first_arg.lower() in {'td','ip','d'}:
 			try:
 				viewed_session =  self.db.read_all_session_for_status(first_arg)
@@ -302,6 +325,12 @@ class StudyTracker:
 
 		
 	def remove_session(self, arg_list: list[str]) -> None:
+		"""
+		Removes the session with given session id from table,
+		Arguments: list of strings
+
+		In case of no arguments: Prompts the user if they want to clear the table. If 'Yes' -> clear table. If 'No', do nothing.
+		"""
 		if not arg_list:
 			try:
 				while True:
@@ -334,6 +363,13 @@ class StudyTracker:
 
 
 	def update_session(self, arg_list: list[str]) -> None:
+
+		"""
+		Updates the data in specified column with specified new data
+		Arguments: list of strings
+
+		In case of less than 3 arguments: Prints out an error message to the user, asking for correct command format
+		"""
 		if not arg_list or len(arg_list) < 3:
 			print("Arguments are missing. Use command like: update session [session_id] [column] [new_content]")
 			return
@@ -399,7 +435,7 @@ class StudyTracker:
 			print(f"{input} is not a number.")
 			return False
 
-	"""EXPORT METHODS"""
+	"""__EXPORT METHODS__"""
 
 	def export_course(self, arg_list: list[str])-> None:
 		exporter = Export(self.db)
@@ -448,7 +484,8 @@ class StudyTracker:
 			print(f"Error when exporting data: {e}")
 			return
 
-	"""DATABASE RELATED"""
+
+	"""__DATABASE RELATED__"""
 
 	"""prompts the user for confirmation if they want to delete database, if Y given, deletes database"""
 	def remove_database(self)-> str:
