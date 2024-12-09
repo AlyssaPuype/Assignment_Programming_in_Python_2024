@@ -19,12 +19,14 @@ class DatabaseManager:
 
 		db_name = db_name or "StudyTracker.db"
 		print(db_name)
+		print(os.getcwd())
 		if not os.path.exists(DATABASE_PATH):
 			print(f"\nInvalid or no path given. Database created in {os.getcwd()}")
-			self.db_path = os.path.join(os.getcwd(),DATABASE_NAME)
+			self.db_path = os.path.join(os.getcwd(), db_name)
 		else:
 			self.db_path = os.path.join(DATABASE_PATH, db_name)
-
+			print(f"Database created in: {self.db_path}")
+		
 		try:
 			self.con = sqlite3.connect(self.db_path)
 			self.cursor = self.con.cursor()
