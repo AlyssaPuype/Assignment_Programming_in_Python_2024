@@ -1,5 +1,5 @@
 """DATABASE CONSTANTS"""
-DATABASE_NAME =""
+DATABASE_NAME ="your_database_name.sqlite3"
 DATABASE_PATH ="/path/to/database"
 
 """SESSION TABLE"""

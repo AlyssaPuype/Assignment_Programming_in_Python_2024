@@ -17,9 +17,7 @@ class DatabaseManager:
 		check if give path exists or use default(current working directory)
 		"""
 
-		db_name = db_name or "StudyTracker.db"
-		print(db_name)
-		print(os.getcwd())
+		db_name = db_name or "StudyTracker.sqlite3"
 		if not os.path.exists(DATABASE_PATH):
 			print(f"\nInvalid or no path given. Database created in {os.getcwd()}")
 			self.db_path = os.path.join(os.getcwd(), db_name)
