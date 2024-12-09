@@ -11,7 +11,6 @@ class StudyTracker:
 	def __init__(self, db: DatabaseManager) -> None:
 		self.db = db
 
-
 	"""__WELCOME__"""
 
 	def show_welcome_message(self) -> None:
