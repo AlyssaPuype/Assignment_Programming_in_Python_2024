@@ -1,3 +1,4 @@
+*This file will be pushed onto the repo aswell, for myself and to show what I kind of wanted to do + what I can still do, I can keep adding things to it and optimize, but then I know no ending...*
 
 ### Tasks:
 - [x] Add full implementation for `create_course` (works).
@@ -13,8 +14,9 @@
 - [x] Adapt `session.py`: Add the `__str__` function.
 - [x] Replace # comments with docstrings
 - [x] Add a remove all command that empties the table (for courses and sessions)
-- ![ ] Finalize README.md file
+- [x] Finalize README.md file
 - ![ ] Replace variables with constants where possible
+- ![ ] When invalid input is given by the user, also show which argument is missing or faulty
 
 ### Extra's I can do
 - ![ ] Add a count courses and count sessions that counts the amount of courses and sessions
