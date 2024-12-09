@@ -55,3 +55,5 @@ Imported by `application_manager`.
 - **requirements.txt**: File containing all the required packages.
 - **configuration.py**: Module containing database name, database path and status values. If path is invalid, current directory will be used as location for the database
 
+
+
