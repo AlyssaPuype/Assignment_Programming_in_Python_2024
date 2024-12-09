@@ -1,5 +1,5 @@
 """DATABASE CONSTANTS"""
-DATABASE_NAME = "StudyTracker.db"
+DATABASE_NAME =""
 DATABASE_PATH ="/path/to/database"
 
 """SESSION TABLE"""

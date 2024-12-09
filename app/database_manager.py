@@ -12,11 +12,18 @@ class DatabaseManager:
 
 	def __init__(self, db_name=DATABASE_NAME) -> None:
 
-		self.db_path = os.path.join(DATABASE_PATH, db_name)
+		"""
+		db_name is either name given in configuration.py or default
+		check if give path exists or use default(current working directory)
+		"""
 
+		db_name = db_name or "StudyTracker.db"
+		print(db_name)
 		if not os.path.exists(DATABASE_PATH):
-			self.db_path = DATABASE_NAME
 			print(f"\nInvalid or no path given. Database created in {os.getcwd()}")
+			self.db_path = os.path.join(os.getcwd(),DATABASE_NAME)
+		else:
+			self.db_path = os.path.join(DATABASE_PATH, db_name)
 
 		try:
 			self.con = sqlite3.connect(self.db_path)
@@ -27,6 +34,8 @@ class DatabaseManager:
 			print(f"Error when trying to connect to {self.db_path} : {e}")
 			raise
 
+
+	"""Creates two tables, Courses and Sessions"""
 	def create_tables(self) -> None:
 		try:
 			self.cursor.execute("""
