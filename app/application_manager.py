@@ -158,8 +158,6 @@ class StudyTracker:
 						return False
 					else:
 						print("invalid answer. Type 'Y' to clear table or 'N' to cancel")
-				else: 
-					print("Unknown command. Use command like: remove course")
 			except Exception as e:
 				print("Error when trying to clear table")
 
@@ -348,8 +346,6 @@ class StudyTracker:
 						return False
 					else:
 						print("invalid answer. Type 'Y' to clear table or 'N' to cancel")
-				else: 
-					print("Unknown command. Use command like: remove course all")
 			except Exception as e:
 				print("Error when trying to clear table")
 				return
